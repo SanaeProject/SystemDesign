@@ -5,8 +5,23 @@ body {
     
 }
 
+*{
+    font-family: var(--bs-font-monospace) 
+}
+
 h1{
     color: #007bff;
+}
+
+/* ナビゲーションバー */
+.custom-success {
+    color: #198754;
+    border-color: #198754;
+    text-decoration: none;
+}
+.custom-success:hover, .custom-success:active {
+    color: #fff;
+    background-color: #198754;
 }
 
 /* login */

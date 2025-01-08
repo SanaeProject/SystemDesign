@@ -28,7 +28,7 @@
     />
 
     <!-- 独自スタイルシート -->
-    <link href="css/custom.css" rel="stylesheet" />
+    <link href="../../css/custom.css" rel="stylesheet" />
 
     <!-- ＝＝＝　これ以降を編集します　＝＝＝＝＝＝ -->
 
@@ -36,7 +36,7 @@
     <meta name="description" content="2024システムデザインⅠ演習" />
     <meta
       name="author"
-      content="クラス:CT1 学籍番号:12345678 氏名:〇〇　〇〇"
+      content="クラス:CT1A 学籍番号:20246124 氏名:布目 純大"
     />
 
     <title>ここにページタイルを入力</title>
@@ -44,7 +44,7 @@
 
   <body>
     <!-- メニュー挿入 -->
-    <div id="menu"></div>
+    <div id="header"></div>
 
     <!-- コンテンツ（ページ表示内容）はここ以降に作成します -->
 
@@ -52,9 +52,9 @@
     <!--  ＝＝＝　これ以降は、共通部分。編集しないでください　＝＝＝＝＝＝ -->
     <!-- Menu挿入 -->
     <script>
-      fetch("../ui/header.html")
+      fetch("../../ui/header.html")
         .then((response) => response.text())
-        .then((data) => (document.querySelector("#menu").innerHTML = data));
+        .then((data) => (document.querySelector("#header").innerHTML = data));
     </script>
 
     <!-- BootstrapScript -->
@@ -64,6 +64,6 @@
       crossorigin="anonymous"
     ></script>
     <!-- 独自JavaScript -->
-    <script src="js/custom.js"></script>
+    <script src="../../js/custom.js"></script>
   </body>
 </html>
