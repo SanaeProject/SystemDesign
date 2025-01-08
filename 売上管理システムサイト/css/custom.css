@@ -1,0 +1,16 @@
+/* 共通 */
+body {
+    background-color: #9d9d9d4f;
+    font-family: 'Noto Sans JP', sans-serif;    /* Googleフォント */
+    
+}
+
+h1{
+    color: #007bff;
+}
+
+/* login */
+#login {
+    max-width: 300px;
+}
+
