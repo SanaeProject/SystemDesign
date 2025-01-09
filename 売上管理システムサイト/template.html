@@ -43,19 +43,14 @@
   </head>
 
   <body>
-    <!-- メニュー挿入 -->
+    <!-- ヘッダー挿入 -->
     <div id="menu"></div>
 
     <!-- コンテンツ（ページ表示内容）はここ以降に作成します -->
 
     <!-- コンテンツ（ページ表示内容）ここまで -->
-    <!--  ＝＝＝　これ以降は、共通部分。編集しないでください　＝＝＝＝＝＝ -->
-    <!-- Menu挿入 -->
-    <script>
-      fetch("../ui/header.html")
-        .then((response) => response.text())
-        .then((data) => (document.querySelector("#menu").innerHTML = data));
-    </script>
+    <!-- ヘッダー挿入 -->
+    <script src="../../ui/dist/header.js"></script>
 
     <!-- BootstrapScript -->
     <script
