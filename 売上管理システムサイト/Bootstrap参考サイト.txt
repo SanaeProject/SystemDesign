@@ -1,9 +1,0 @@
-Bootstrap 5   ※バージョンは５で調べるように！
-
-公式サイト
-https://getbootstrap.jp/
-
-
-侍エンジニア
-Bootstrapの使い方とは?初心者でもわかる使い方をまとめて解説
-https://www.sejuku.net/blog/81688
