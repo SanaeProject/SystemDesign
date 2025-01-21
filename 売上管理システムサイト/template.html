@@ -59,25 +59,6 @@
       </section>
     </main>
     <!-- コンテンツ（ページ表示内容）ここまで -->
-    <!-- ヘッダー挿入 -->
-    <script>
-      async function loadScripts() {
-        try {
-          const response = await fetch("../commonUi/header.html");
-          const data = await response.text();
-          document.querySelector("#header").innerHTML = data;
-          
-          // custom.jsの読み込み
-          const script = document.createElement('script');
-          script.src = "../js/custom.js";
-          document.body.appendChild(script);
-        } catch (error) {
-          console.error('スクリプトの読み込みに失敗:', error);
-        }
-      }
-      
-      loadScripts();
-    </script>
 
     <!-- BootstrapScript -->
     <script
@@ -86,5 +67,7 @@
       crossorigin="anonymous"
     ></script>
     
+    
+
   </body>
 </html>
