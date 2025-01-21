@@ -13,15 +13,14 @@ h1{
     color: #007bff;
 }
 
-/* ナビゲーションバー */
-.custom-success {
-    color: #198754;
-    border-color: #198754;
-    text-decoration: none;
+main section {
+    padding: 16px;
 }
-.custom-success:hover, .custom-success:active {
-    color: #fff;
-    background-color: #198754;
+
+/* ナビゲーションバー */
+.nav-item:hover .nav-link{
+    background-color: rgba(0, 0, 0, 0.25);
+    transition: background-color 0.2s;
 }
 
 /* login */
