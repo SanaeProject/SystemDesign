@@ -61,22 +61,53 @@
     <!-- コンテンツ（ページ表示内容）ここまで -->
     <!-- ヘッダー挿入 -->
     <script>
-      async function loadScripts() {
-        try {
-          const response = await fetch("../commonUi/header.html");
-          const data = await response.text();
-          document.querySelector("#header").innerHTML = data;
-          
-          // custom.jsの読み込み
-          const script = document.createElement('script');
-          script.src = "../js/custom.js";
-          document.body.appendChild(script);
-        } catch (error) {
-          console.error('スクリプトの読み込みに失敗:', error);
-        }
-      }
+      // async function loadHeaderAndInitialize() {
+      //   try {
+      //     // ヘッダーの読み込みと挿入
+      //     const response = await fetch("../commonUi/header.html");
+      //     const data = await response.text();
+      //     document.querySelector("#header").innerHTML = data;
       
-      loadScripts();
+      //     // location処理の実行
+      //     const elements = {
+      //       parent: document.getElementById('location-parent'),
+      //       child: document.getElementById('location-child')
+      //     };
+      
+      //     if (!elements.parent || !elements.child) {
+      //       console.log('必要な要素が見つかりません');
+      //       return;
+      //     }
+      
+      //     const urlParams = new URLSearchParams(window.location.search);
+      //     const pLoc = urlParams.get('pLoc');
+      //     const cLoc = urlParams.get('cLoc');
+      
+      //     if (pLoc && cLoc) {
+      //       ['parent', 'child'].forEach(key => {
+      //         const value = key === 'parent' ? pLoc : cLoc;
+      //         elements[key].innerText = value;
+      //         localStorage.setItem(`location-${key}`, value);
+      //       });
+      //       console.log("ploc && cloc: true");
+      //     } else {
+      //       ['parent', 'child'].forEach(key => {
+      //         const savedValue = localStorage.getItem(`location-${key}`);
+      //         if (savedValue) {
+      //           elements[key].innerText = savedValue;
+      //         } else {
+      //           console.error('does not saved');
+      //         }
+      //       });
+      //       console.log("ploc && cloc: false");
+      //     }
+      //   } catch (error) {
+      //     console.error('初期化に失敗:', error);
+      //   }
+      // }
+      
+      //   // ページ読み込み時に実行
+      //   loadHeaderAndInitialize();
     </script>
 
     <!-- BootstrapScript -->
@@ -85,6 +116,6 @@
       integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
       crossorigin="anonymous"
     ></script>
-    
+    <script src="../js/custom.js"></script>
   </body>
 </html>

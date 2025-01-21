@@ -28,7 +28,7 @@
     />
 
     <!-- 独自スタイルシート -->
-    <link href="../../css/custom.css" rel="stylesheet" />
+    <link href="../css/custom.css" rel="stylesheet" />
 
     <!-- ＝＝＝　これ以降を編集します　＝＝＝＝＝＝ -->
 
@@ -39,22 +39,32 @@
       content="クラス:CT1A 学籍番号:20246124 氏名:布目 純大"
     />
 
-    <title>ここにページタイルを入力</title>
+    <style>
+      .navbar-nav .nav-item {
+          margin-right: 45px; /* liタグの間隔を開ける */
+      }
+    </style>
+
+    <title>Home</title>
   </head>
 
   <body>
     <!-- ヘッダー挿入 -->
-    <div id="header"></div>
+    <header id="header"></header>
 
     <!-- コンテンツ（ページ表示内容）はここ以降に作成します -->
+    <main class="p-0">
+      <section>
+        <div class="title-container">
+          <h1>タイトル</h1>
+        </div>
 
+        <div class="content-container"">
+          <p>内容</p>
+        </div>
+      </section>
+    </main>
     <!-- コンテンツ（ページ表示内容）ここまで -->
-    <!-- ヘッダー挿入 -->
-    <script>
-      fetch("../../ui/header.html")
-        .then((response) => response.text())
-        .then((data) => (document.querySelector("#header").innerHTML = data));
-    </script>
 
     <!-- BootstrapScript -->
     <script
@@ -62,7 +72,9 @@
       integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
       crossorigin="anonymous"
     ></script>
+                             
     <!-- 独自JavaScript -->
-    <script src="../../js/custom.js"></script>
+    <script src="../js/custom.js"></script>
+                                 
   </body>
 </html>
