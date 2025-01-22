@@ -1,10 +1,9 @@
-function handleLocationClick(pLoc, cLoc, e) {
+function handleLocationClick(pLoc, e) {
   e.preventDefault(); // デフォルトのリンク動作を防ぐ
   const href = e.currentTarget.getAttribute('href');
   const url = new URL(href, window.location);  // 現在のオリジンを基準に相対パスを解決
   // alert(url);
   url.searchParams.set('pLoc', pLoc);
-  url.searchParams.set('cLoc', cLoc);
   window.location.href = url.toString();
   return false;
 }
@@ -17,49 +16,31 @@ async function loadHeaderAndInitialize() {
     document.querySelector("#header").innerHTML = data;
 
     // location処理の実行
-    const elements = {
-      parent: document.getElementById('location-parent'),
-      child: document.getElementById('location-child')
-    };
+    const element = document.getElementById('location-parent');
 
-    if (!elements.parent || !elements.child) {
+    if (!element) {
       console.log('必要な要素が見つかりません');
       return;
     }
 
     const urlParams = new URLSearchParams(window.location.search);
     const pLoc = urlParams.get('pLoc');
-    const cLoc = urlParams.get('cLoc');
 
     if (pLoc == 'スケルトン') {
-      elements['parent'].innerHTML = "<p></p>";
-      localStorage.setItem('location-parent', '');
+      element.innerText = null;
+      localStorage.setItem('location-parent', null);
       console.log("pLocが設定されました");
     } else if (pLoc) {
-      elements['parent'].innerText = pLoc;
+      element.innerText = pLoc;
       localStorage.setItem('location-parent', pLoc);
       console.log("pLocが設定されました");
     } else {
       const savedParentValue = localStorage.getItem('location-parent');
       if (savedParentValue) {
-        elements['parent'].innerText = savedParentValue;
+        element.innerText = savedParentValue;
         console.log('savedParentValueが設定されました');
       } else {
-        elements['parent'].innerHTML = "<p></p>";
-      }
-    }
-
-    if (cLoc) {
-      elements['child'].innerText = cLoc;
-      localStorage.setItem('location-child', cLoc);
-      console.log("cLocが設定されました");
-    } else {
-      const savedChildValue = localStorage.getItem('location-child');
-      if (savedChildValue) {
-        elements['child'].innerText = savedChildValue;
-        console.log('savedChildValueが設定されました');
-      } else {
-        console.error('childの値は保存されていません');
+        element.innerHTML = null;
       }
     }
   } catch (error) {
