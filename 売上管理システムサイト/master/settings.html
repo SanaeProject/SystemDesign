@@ -29,17 +29,19 @@
         display: flex;
         flex-direction: row;
       }
+      .side-nav {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        align-content: center;
+      }
       .side-nav-item {
         margin-top: 20px;
       }
-      #default-link {
-        border-inline-start: 3px solid #c0c0c0;
-        padding-left: 2px;
-      }
       .side-nav-link {
-        padding-left: 5px;
         color: black;
         text-decoration: none;
+        padding-left: 5px;
       }
       .side-nav-link:link{
         color: black;
@@ -50,20 +52,33 @@
       .side-nav-link:hover{
         color: black;
         opacity: 0.7;
+      }
+      .side-nav-item:hover {
         padding-left: 2px;
-        border-inline-start: 3px double black;
+        border-inline-start: 3px double #c0c0c0;
       }
       .side-nav-link:active{
         color: black;
       }
+      .current-location {
+        border-inline-start: 3px solid #c0c0c0;
+        padding-left: 2px;
+      }
+      .current-location:hover {
+        border-inline-start: 3px solid #c0c0c0;
+        padding-left: 2px;
+      }
       .sidebar-section {
         min-width: 200px;
+        border-inline-end: 1px solid #f8f9fa;
       }
       .main-section {
         width: 80%;
       }
-      section div {
+      .page-content {
+        height: 100vh;
         padding-top: 10px;
+        border-top-left-radius: 50px;
       }
       @media  screen and (max-width: 600px) {
         main {
@@ -71,6 +86,18 @@
         }
         .main-section {
           width: 100%;
+        }
+        .page-content {
+          padding: 20px 10px;
+          border-radius: 50px;
+          background-color: #f8f9fa;
+          box-shadow: 0 1rem 3rem #a0a0a0;
+        }
+        .sidebar-section {
+          border-inline-end: none;
+        }
+        .side-nav-item {
+          width: 100px;
         }
       }
     </style>
@@ -95,52 +122,54 @@
     <main class="flex">
       <h1 class="d-none">スケルトン(見えないよ)</h1>
       <!-- サイドバーセクション -->
-      <section class="sidebar-section flex-fill" style="border-inline-end: 1px solid #f8f9fa;">
-        <ul class="list-unstyled p-3">
-          <li class="side-nav-item">
-            <a class="side-nav-link" id="default-link" href="" value="account-page" onclick="pageRoter(event)">アカウント</a>
+      <section class="sidebar-section flex-fill">
+        <ul class="side-nav list-unstyled p-3">
+          <li class="side-nav-item current-location">
+            <a class="side-nav-link" href="#account-page" onclick="pageRoter(event)">アカウント</a>
           </li>
           <li class="side-nav-item">
-            <a class="side-nav-link" href="" value="notice-page" onclick="pageRoter(event)">通知</a>
+            <a class="side-nav-link" href="#notice-page" onclick="pageRoter(event)">通知</a>
           </li>
           <li class="side-nav-item">
-            <a class="side-nav-link" href="" value="authority-page" onclick="pageRoter(event)">権限</a>
+            <a class="side-nav-link" href="#authority-page" onclick="pageRoter(event)">権限</a>
           </li>
         </ul>
       </section>
 
       <!-- メインセクション -->
       <section class="main-section flex-fill">
-
         <!-- アカウントページ -->
-        <div id="account-page">
+        <div id="account-page" class="page-content">
           <div class="title-container text-center">
             <h2 class="display-5">アカウント</h2>
           </div>
           <div class="content-container">
-
+            <p>社員コード</p>
+            <p>パスワード</p>
           </div>
         </div>
 
         <!-- 通知ぺージ -->
-        <div id="notice-page" class="d-none">
+        <div id="notice-page" class="d-none page-content">
           <div class="title-container text-center">
             <h2 class="display-5">通知</h2>
           </div>
           <div class="content-container">
             <p class="lead">通知を管理します。</p>
-            <!-- ここに役職と権限の管理に関する内容を追加 -->
+            <p>メール</p>
+            <p>sms</p>
           </div>
         </div>
 
         <!-- 権限ページ -->
-        <div id="authority-page" class="d-none">
+        <div id="authority-page" class="d-none page-content">
           <div class="title-container text-center">
             <h2 class="display-5">権限</h2>
           </div>
           <div class="content-container">
             <p class="lead">役職とその権限を管理します。</p>
-            <!-- ここに役職と権限の管理に関する内容を追加 -->
+            <p>役職</p>
+
           </div>
         </div>
       </section>
@@ -161,36 +190,36 @@
       function pageRoter(e) {
         e.preventDefault();
 
-        const href = e.currentTarget.getAttribute('value');
-        const visibleElement = document.getElementById(href);
+        const href = e.currentTarget.getAttribute('href');
+        const parentElement = e.currentTarget.parentNode;
+        const linkElements = document.getElementsByClassName('side-nav-item');
         const elements = {
           account: document.getElementById('account-page'),
           notice: document.getElementById('notice-page'),
           authority: document.getElementById('authority-page')
         };
+        const currentPage = document.getElementById(href.slice(1, href.length));
+
+        // スタイル変更
+        Array.prototype.forEach.call(
+          linkElements,
+          linkElement => {
+            linkElement.classList.remove('current-location');
+          }
+        );
+        parentElement.classList.add('current-location');
 
         // すべてのページを非表示
         elements.account.classList.add('d-none');
         elements.notice.classList.add('d-none');
         elements.authority.classList.add('d-none');
 
-        // スタイル変更
-        const linkElements = document.getElementsByClassName('side-nav-link');
-        Array.prototype.forEach.call(
-          linkElements,
-          linkElement => {
-            linkElement.style.border = "none";
-        });
-        document.getElementById('default-link').style.border = "none";
-
-        e.currentTarget.style.borderInlineStart = "3px solid #c0c0c0";
-        e.currentTarget.style.paddingLeft = "2px";
         
         // 押されたページを表示
-        visibleElement.classList.remove('d-none');
+        currentPage.classList.remove('d-none');
 
         // ページ遷移
-        location.replace(location.href.substring(0, location.href.indexOf('#')) + '#' + href);
+        location.replace(location.href.substring(0, location.href.indexOf('#')) + href);
 
         return false;
       }
