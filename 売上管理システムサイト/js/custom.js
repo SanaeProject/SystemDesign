@@ -62,3 +62,13 @@ async function loadHeaderAndInitialize() {
 
 // ページ読み込み時に実行
 loadHeaderAndInitialize();
+
+function showClock() {
+  const nowTime = new Date();
+  const nowHour = nowTime.getHours();
+  const nowMin  = nowTime.getMinutes();
+  const nowSec  = nowTime.getSeconds();
+  const msg = (nowHour >= 10 ? nowHour : '0' + nowHour) + ':' + (nowMin >= 10 ? nowMin : '0' + nowMin) + ':' + (nowSec >= 10 ? nowSec : '0' + nowSec);
+  document.getElementById("date-time").innerHTML = msg;
+}
+setInterval('showClock()',1000);
