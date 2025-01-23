@@ -60,7 +60,7 @@
                 <input type="password" class="form-control" id="password" placeholder="パスワードを入力" required>
                 <p id="invalid-password"></p>
             </div>
-            <button value="./home/home.html" type="submit" class="btn btn-outline-dark w-100">ログイン</button>
+            <button type="submit" class="btn btn-outline-dark w-100">ログイン</button>
         </form>
     </div>
     <!-- コンテンツ（ページ表示内容）ここまで -->
@@ -74,10 +74,9 @@
     ></script>
     <!-- ログイン処理(仮) -->
     <script>
-      function handleLocationClick(pLoc, e) {
-        const href = e.getAttribute('value');
-        const url = new URL(href, window.location);  // 現在のオリジンを基準に相対パスを解決
-        // alert(url);
+      function handleLocationClick(pLoc) {
+        const url = new URL('./home/home.html', window.location);  // 現在のオリジンを基準に相対パスを解決
+
         url.searchParams.set('pLoc', pLoc);
         window.location.href = url.toString();
         return false;
@@ -106,7 +105,7 @@
           }
 
           if (correct == 2) {
-            handleLocationClick('ホーム', clickElement);
+            handleLocationClick('ホーム');
           }
       });
     </script>
