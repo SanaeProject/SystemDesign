@@ -29,6 +29,9 @@
         display: flex;
         flex-direction: row;
       }
+      h1 {
+        padding: 16px 16px 0 16px;
+      }
       .side-nav {
         display: flex;
         flex-direction: column;
@@ -40,8 +43,11 @@
       }
       .side-nav-link {
         color: black;
+        font-size: 16px;
         text-decoration: none;
+        cursor: pointer;
         padding-left: 5px;
+        margin: 0;
       }
       .side-nav-link:link{
         color: black;
@@ -74,13 +80,33 @@
         border-inline-end: 1px solid #f8f9fa;
       }
       .main-section {
+        padding-top: 0;
         width: 80%;
+        text-align: center;
+      }
+      .title-container {
+        margin: 20px;
+        color: rgba(0, 0, 0, 0.7);
       }
       .page-content {
         height: 100vh;
         padding-top: 10px;
         /* border-top-left-radius: 50px; */
-    }
+      }
+      .content-container {
+        padding: 20px;
+      }
+      .dropdown-btn {
+      cursor: pointer;
+      border: none;
+      color: black;
+      display: block;
+      background: none;
+      position: relative;
+      /* ボタン要素のサイズ */
+      width: 40px;
+      height: 40px;
+      }
       @media  screen and (max-width: 600px) {
         main {
           flex-direction: column;
@@ -90,15 +116,16 @@
         }
         .page-content {
           padding: 20px 10px;
-          /* border-radius: 50px; */
-          /* background-color: #f8f9fa;
-          box-shadow: 0 1rem 3rem #a0a0a0; */
         }
         .sidebar-section {
           border-inline-end: none;
+          border-bottom: 1px solid #f8f9fa;
         }
         .side-nav-item {
           width: 100px;
+        }
+        .page-title {
+          position: absolute;
         }
       }
     </style>
@@ -120,20 +147,20 @@
     <header id="header"></header>
 
     <!-- コンテンツ（ページ表示内容）はここ以降に作成します -->
+      <h1 class="page-title">設定</h1>
     <main class="flex">
-      <h1 class="position-absolute p-3">設定</h1>
 
       <!-- サイドバーセクション -->
       <section class="sidebar-section flex-fill">
         <ul class="side-nav list-unstyled p-3">
           <li class="side-nav-item current-location">
-            <a class="side-nav-link" href="#account-page" onclick="pageRoter(event)">アカウント</a>
+            <h2 class="side-nav-link" href="#account-page" onclick="pageRoter(event)">アカウント</h2>
           </li>
           <li class="side-nav-item">
-            <a class="side-nav-link" href="#notice-page" onclick="pageRoter(event)">通知</a>
+            <h2 class="side-nav-link" href="#notice-page" onclick="pageRoter(event)">通知</h2>
           </li>
           <li class="side-nav-item">
-            <a class="side-nav-link" href="#authority-page" onclick="pageRoter(event)">権限</a>
+            <h2 class="side-nav-link" href="#authority-page" onclick="pageRoter(event)">権限</h2>
           </li>
         </ul>
       </section>
@@ -145,9 +172,16 @@
           <div class="title-container text-center">
             <h2 class="display-5">アカウント</h2>
           </div>
-          <div class="content-container">
-            <p>社員コード</p>
-            <p>パスワード</p>
+          <div class="card content-container text-start">
+            <p class="m-0">社員コード</p>
+            <div id="employee-code" class="card-body card mb-4">
+              <span>123456</span>
+            </div>
+            <p class="m-0 text-start">パスワード</p>
+            <div id="employee-code" class="card-body card mb-4">
+              <span>********</span>
+            </div>
+            <button class="btn btn-secondary" onclick="setPassword()">パスワードを設定</button>
           </div>
         </div>
 
@@ -156,10 +190,32 @@
           <div class="title-container text-center">
             <h2 class="display-5">通知</h2>
           </div>
-          <div class="content-container">
-            <p class="lead">通知を管理します。</p>
-            <p>メール</p>
-            <p>sms</p>
+          <div class="card content-container text-start">
+            <h3>メール</h3>
+            <div class="card-body">
+              <h4>標準メール</h4>
+              <div class="card-body card mb-4 btn-group">
+                <button
+                  class="dropdown-btn dropdown-toggle w-100"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                  >
+                  <div id="main-email" class="d-inline"></div>
+                </button>
+                <ul
+                  class="email-change-list dropdown-menu w-100"
+                >
+                </ul>
+              </div>
+              <h4>追加のメール</h4>
+              <div class="small">
+                標準メールへの送信に不具合が生じた場合に使用されます。
+              </div>
+              <div class="sub-email-list card-body card mb-2">
+              </div>
+              <button class="btn btn-secondary" onclick="addEmail()">メールを追加</button>
+            </div>
+            <h3>SMS設定: <span id="sms-status">有効</span></h3>
           </div>
         </div>
 
@@ -168,10 +224,11 @@
           <div class="title-container text-center">
             <h2 class="display-5">権限</h2>
           </div>
-          <div class="content-container">
+          <div class="card content-container">
             <p class="lead">役職とその権限を管理します。</p>
-            <p>役職</p>
-
+            <p>役職: 管理者</p>
+            <button class="btn btn-warning" onclick="changeAdmin()">管理者アカウントを変更</button>
+            <p>権限別ページルーティングを管理します。</p>
           </div>
         </div>
       </section>
@@ -188,11 +245,105 @@
     <script src="../js/custom.js"></script>
 
     <script>
+      let currPage = "#account-page";
+      let currMainEmail;
+
+      const emailList = [
+        { id: '1', data: 'example1@example.com', main: true },
+        { id: '2', data: 'example2@example.com', main: false },
+        { id: '3', data: 'example3@example.com', main: false }
+      ];
+
+      function emailElementListener() {
+
+        const subEmailDeleteBtns = document.getElementsByClassName('sub-email-delete');
+        const subEmailChangeBtns = document.getElementsByClassName('sub-email-change');
+        const mainEmailChangeBtns = document.getElementsByClassName('main-email-change');
+
+        Array.from(mainEmailChangeBtns).forEach((mainEmailChangeBtn) => {
+          mainEmailChangeBtn.addEventListener("click", function(e) {
+            // メインメール変更処理
+            alert("メインメールを変更します");
+            currMainEmail = e.currentTarget.textContent;
+
+            emailList.forEach((email) => {
+              if (email.main) {
+                email.main = false;
+              } else {
+                if (email.data == currMainEmail) {
+                  email.main = true;
+                }
+              }
+            });
+
+            console.log(currMainEmail);
+            populateEmailLists();
+            emailElementListener();
+          });
+        });
+
+        Array.from(subEmailChangeBtns).forEach((subEmailChangeBtn) => {
+          subEmailChangeBtn.addEventListener("click", function(e) {
+            // サブメールの変更処理
+            alert("パスワードを変更します。");
+          });
+        });
+
+        Array.from(subEmailDeleteBtns).forEach((subEmailDeleteBtn) => {
+          subEmailDeleteBtn.addEventListener("click", function(e) {
+            // サブメールの変更処理
+            alert("メールを削除します。");
+          });
+        });
+      }
+
+      function populateEmailLists() {
+        const subEmailListElement = document.querySelector('.sub-email-list');
+        const emailChangeListElement = document.querySelector('.email-change-list');
+
+        subEmailListElement.innerHTML = "";
+        emailChangeListElement.innerHTML = "";
+
+        emailList.forEach(email => {
+          // メインメールかどうかを確認
+          if (email.main) {
+            // メインメールとして表示
+            const mainEmailElement = document.getElementById('main-email');
+            mainEmailElement.textContent = email.data;
+          } else {
+            // サブメールリストにメールを追加
+            const subEmailDiv = document.createElement('div');
+            subEmailDiv.className = 'd-flex justify-content-between pt-2';
+            subEmailDiv.innerHTML = `
+              <div id="sub-email-${email.id}" class="start-0 align-content-center">
+                ${email.data}
+              </div>
+              <div class="btn-group">
+                <button class="dropdown-btn" data-bs-toggle="dropdown" aria-expanded="false">⁝</button>
+                <ul class="dropdown-menu">
+                  <li><div class="sub-email-change dropdown-item">パスワード変更</div></li>
+                  <li><div class="sub-email-delete dropdown-item">削除</div></li>
+                </ul>
+              </div>
+            `;
+            subEmailListElement.appendChild(subEmailDiv);
+          }
+
+          // メール変更リストにメールを追加
+          const emailChangeDiv = document.createElement('div');
+          emailChangeDiv.className = 'main-email-change dropdown-item';
+          if (!email.main) {
+            emailChangeDiv.textContent = email.data;
+          }
+          emailChangeListElement.appendChild(emailChangeDiv);
+        });
+      }
 
       function pageRoter(e) {
         e.preventDefault();
 
         const href = e.currentTarget.getAttribute('href');
+        cuurPage = href;
         const parentElement = e.currentTarget.parentNode;
         const linkElements = document.getElementsByClassName('side-nav-item');
         const elements = {
@@ -215,7 +366,6 @@
         elements.account.classList.add('d-none');
         elements.notice.classList.add('d-none');
         elements.authority.classList.add('d-none');
-
         
         // 押されたページを表示
         currentPage.classList.remove('d-none');
@@ -224,6 +374,54 @@
         location.replace(location.href.substring(0, location.href.indexOf('#')) + href);
 
         return false;
+      }
+
+      function setPassword() {
+        // パスワード設定のロジックをここに追加
+        alert('パスワードを設定します。');
+      }
+
+      function changeStandardEmail() {
+        // 標準メール
+        alert('標準メール変更します。')
+      }
+
+      function addEmail() {
+        // メール追加のロジックをここに追加
+        alert('メールを追加します。');
+      }
+
+      function changeAdmin() {
+        // 管理者アカウント変更のロジックをここに追加
+        alert('管理者アカウントを変更します。');
+      }
+
+      window.onload = function() {
+        // リロード時にアカウントページに戻らないようにするための処理
+        const link = location.href.slice(location.href.indexOf('#'), location.href.length);
+        if (link.includes('#')) {
+          const elements = document.querySelectorAll('h2');
+          const linkElements = Array.from(elements).filter((element) => {
+            return element.getAttribute('href');
+          });
+
+          const targetElements = linkElements.filter((element) => {
+            if (element.getAttribute('href') == link) {
+              return element;
+            }
+          });
+
+          const targetElement = targetElements[0];
+          if (link != currPage) {
+            targetElement.click();
+          }
+        }
+
+        // メール関連
+        populateEmailLists();
+        emailElementListener();
+        currMainEmail = document.getElementById("main-email").textContent;
+        console.log("currEmail:" + currMainEmail);
       }
     </script>
 
