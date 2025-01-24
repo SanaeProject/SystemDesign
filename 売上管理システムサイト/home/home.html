@@ -36,6 +36,23 @@
       .navbar-nav .nav-item {
           margin-right: 45px; /* liタグの間隔を開ける */
       }
+      .pending-task-item {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+      }
+      .notification-badge {
+          cursor: pointer;
+      }
+      .notification-item {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+      }
+      .notification-time {
+          color: #6c757d;
+          font-size: 0.8rem;
+      }
     </style>
 
     <title>Home</title>
@@ -46,14 +63,52 @@
     <header id="header"></header>
 
     <!-- コンテンツ（ページ表示内容）はここ以降に作成します -->
-    <main class="p-0">
-      <section>
-        <div class="title-container">
-          <h1>タイトル</h1>
+    <main class="container-fluid p-4">
+      <div class="title-container text-center">
+        <h1>売上管理システム</h1>
+      </div>
+      <section class="col-md-8">
+        <div class="card mb-3">
+          <div class="card-header text-danger opacity-75">
+            未完了のタスク
+          </div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item pending-task-item">
+              <span>月次売上レポート作成</span>
+              <span class="badge bg-warning text-dark">期限: 2024/02/28</span>
+            </li>
+            <li class="list-group-item pending-task-item">
+              <span>Q1売上分析資料準備</span>
+              <span class="badge bg-danger">緊急</span>
+            </li>
+            <li class="list-group-item pending-task-item">
+              <span>在庫確認と発注</span>
+              <span class="badge bg-secondary">保留中</span>
+            </li>
+          </ul>
         </div>
+      </section>
 
-        <div class="content-container"">
-          <p>内容</p>
+      <section class="col-md-4">
+        <div class="card">
+          <div class="card-header d-flex justify-content-between align-items-center">
+            通知
+            <span class="badge bg-danger notification-badge">3</span>
+          </div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item notification-item">
+              <small>新しい売上データが追加されました</small>
+              <small class="notification-time">1/31 10:30</small>
+            </li>
+            <li class="list-group-item notification-item">
+              <small>承認待ちの経費精算があります</small>
+              <small class="notification-time">1/31 09:45</small>
+            </li>
+            <li class="list-group-item notification-item">
+              <small>来月の売上予測レポートが準備できました</small>
+              <small class="notification-time">1/31 08:15</small>
+            </li>
+          </ul>
         </div>
       </section>
     </main>
