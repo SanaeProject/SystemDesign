@@ -28,7 +28,7 @@
     />
 
     <!-- 独自スタイルシート -->
-    <link href="css/custom.css" rel="stylesheet" />
+    <link href="../css/custom.css" rel="stylesheet" />
 
     <!-- ＝＝＝　これ以降を編集します　＝＝＝＝＝＝ -->
 
@@ -43,118 +43,124 @@
   </head>
 
   <body>
-    <!-- メニュー挿入 -->
-    <div id="menu"></div>
 
-    <!-- コンテンツ（ページ表示内容）はここ以降に作成します -->
-    <h4 class="text-center">個人売上表</h4>
+    <header id="header"></header>
 
-<!-- 個人売上表のテーブル -->
-<div class="d-flex justify-content-center">
-    <table class="table table-bordered" style="width: 80%;">
-        <thead class="table-light">
-            <tr>
-                <th>氏名</th>
-                <th>売上</th>
-                <th>支給額</th>
-                <th>詳細</th>
-                <th>編集</th>
-            </tr>
-        </thead>
-        <tbody id="customerTableBody">
-            <!-- サンプル1 (売上が75万円) -->
-            <tr>
-                <td>山田太郎</td>
-                <td>¥750,000</td>
-                <td>¥233,000</td> <!-- 支給額のみ -->
-                <td><button class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#detailsModal-1">詳細</button></td>
-                <td><button class="btn btn-warning btn-sm editBtn">編集</button></td>
-            </tr>
-            <!-- サンプル2 (売上が75万円以上) -->
-            <tr>
-                <td>鈴木次郎</td>
-                <td>¥800,000</td>
-                <td>¥285,000</td> <!-- 支給額のみ -->
-                <td><button class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#detailsModal-2">詳細</button></td>
-                <td><button class="btn btn-warning btn-sm editBtn">編集</button></td>
-            </tr>
-            <!-- サンプル3 (売上が75万円以上) -->
-            <tr>
-                <td>佐藤花子</td>
-                <td>¥900,000</td>
-                <td>¥367,500</td> <!-- 支給額のみ -->
-                <td><button class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#detailsModal-3">詳細</button></td>
-                <td><button class="btn btn-warning btn-sm editBtn">編集</button></td>
-            </tr>
-        </tbody>
-    </table>
-</div>
+    <main>
+        <section>
+            <div class="title-container">
+                <h1>個人売上表一覧</h1>
+            </div>
+            <div class="content-container">
+                <!-- 個人売上表のテーブル -->
+                <div class="d-flex justify-content-center" style="margin-top: 50px;">
+                    <table class="table table-bordered" style="width: 80%;">
+                        <thead class="table-light">
+                            <tr>
+                                <th>氏名</th>
+                                <th>売上</th>
+                                <th>支給額</th>
+                                <th>詳細</th>
+                                <th>編集</th>
+                            </tr>
+                        </thead>
+                        <tbody id="customerTableBody">
+                            <!-- サンプル1 (売上が75万円) -->
+                            <tr>
+                                <td>山田太郎</td>
+                                <td>¥750,000</td>
+                                <td>¥233,000</td> <!-- 支給額のみ -->
+                                <td><button class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#detailsModal-1">詳細</button></td>
+                                <td><button class="btn btn-warning btn-sm editBtn">編集</button></td>
+                            </tr>
+                            <!-- サンプル2 (売上が75万円以上) -->
+                            <tr>
+                                <td>鈴木次郎</td>
+                                <td>¥800,000</td>
+                                <td>¥285,000</td> <!-- 支給額のみ -->
+                                <td><button class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#detailsModal-2">詳細</button></td>
+                                <td><button class="btn btn-warning btn-sm editBtn">編集</button></td>
+                            </tr>
+                            <!-- サンプル3 (売上が75万円以上) -->
+                            <tr>
+                                <td>佐藤花子</td>
+                                <td>¥900,000</td>
+                                <td>¥367,500</td> <!-- 支給額のみ -->
+                                <td><button class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#detailsModal-3">詳細</button></td>
+                                <td><button class="btn btn-warning btn-sm editBtn">編集</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
 
-<!-- 詳細モーダル (サンプル1) -->
-<div class="modal fade" id="detailsModal-1" tabindex="-1" aria-labelledby="detailsModalLabel-1" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="detailsModalLabel-1">詳細情報 (山田太郎)</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <p><strong>売上金額:</strong> ¥750,000</p>
-                <p><strong>歩合:</strong> 30% (¥225,000)</p>
-                <p><strong>高速代:</strong> ¥8,000</p>
-                <p><strong>支給額:</strong> ¥233,000</p>
-                <p><strong>具体的な計算:</strong>¥750,000 × 30% + ¥8,000 = ¥233,000</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">閉じる</button>
-            </div>
-        </div>
-    </div>
-</div>
+                <!-- 詳細モーダル (サンプル1) -->
+                <div class="modal fade" id="detailsModal-1" tabindex="-1" aria-labelledby="detailsModalLabel-1" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="detailsModalLabel-1">詳細情報 (山田太郎)</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <p><strong>売上金額:</strong> ¥750,000</p>
+                                <p><strong>歩合:</strong> 30% (¥225,000)</p>
+                                <p><strong>高速代:</strong> ¥8,000</p>
+                                <p><strong>支給額:</strong> ¥233,000</p>
+                                <p><strong>具体的な計算:</strong>¥750,000 × 30% + ¥8,000 = ¥233,000</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">閉じる</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-<!-- 詳細モーダル (サンプル2) -->
-<div class="modal fade" id="detailsModal-2" tabindex="-1" aria-labelledby="detailsModalLabel-2" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="detailsModalLabel-2">詳細情報 (鈴木次郎)</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <p><strong>売上金額:</strong> ¥800,000</p>
-                <p><strong>歩合:</strong> 35% (¥280,000)</p>
-                <p><strong>高速代:</strong> ¥5,000</p>
-                <p><strong>支給額:</strong> ¥285,000</p>
-                <p><strong>具体的な計算:</strong>¥800,000 × 35% + ¥5,000 = ¥285,000</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">閉じる</button>
-            </div>
-        </div>
-    </div>
-</div>
+                <!-- 詳細モーダル (サンプル2) -->
+                <div class="modal fade" id="detailsModal-2" tabindex="-1" aria-labelledby="detailsModalLabel-2" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="detailsModalLabel-2">詳細情報 (鈴木次郎)</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <p><strong>売上金額:</strong> ¥800,000</p>
+                                <p><strong>歩合:</strong> 35% (¥280,000)</p>
+                                <p><strong>高速代:</strong> ¥5,000</p>
+                                <p><strong>支給額:</strong> ¥285,000</p>
+                                <p><strong>具体的な計算:</strong>¥800,000 × 35% + ¥5,000 = ¥285,000</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">閉じる</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-<!-- 詳細モーダル (サンプル3) -->
-<div class="modal fade" id="detailsModal-3" tabindex="-1" aria-labelledby="detailsModalLabel-3" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="detailsModalLabel-3">詳細情報 (佐藤花子)</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <!-- 詳細モーダル (サンプル3) -->
+                <div class="modal fade" id="detailsModal-3" tabindex="-1" aria-labelledby="detailsModalLabel-3" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="detailsModalLabel-3">詳細情報 (佐藤花子)</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <p><strong>売上金額:</strong> ¥900,000</p>
+                                <p><strong>歩合:</strong> 40% (¥360,000)</p>
+                                <p><strong>高速代:</strong> ¥7,500</p>
+                                <p><strong>支給額:</strong> ¥367,500</p>
+                                <p><strong>具体的な計算:</strong>¥900,000 × 40% + ¥7,500 = ¥367,500</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">閉じる</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="modal-body">
-                <p><strong>売上金額:</strong> ¥900,000</p>
-                <p><strong>歩合:</strong> 40% (¥360,000)</p>
-                <p><strong>高速代:</strong> ¥7,500</p>
-                <p><strong>支給額:</strong> ¥367,500</p>
-                <p><strong>具体的な計算:</strong>¥900,000 × 40% + ¥7,500 = ¥367,500</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">閉じる</button>
-            </div>
-        </div>
-    </div>
-</div>
+        </section>
+    </main>
 
     <!-- コンテンツ（ページ表示内容）ここまで -->
     <!--  ＝＝＝　これ以降は、共通部分。編集しないでください　＝＝＝＝＝＝ -->
@@ -172,6 +178,6 @@
       crossorigin="anonymous"
     ></script>
     <!-- 独自JavaScript -->
-    <script src="js/custom.js"></script>
+    <script src="../js/custom.js"></script>
   </body>
 </html>
