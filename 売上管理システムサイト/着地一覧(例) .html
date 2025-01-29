@@ -1,0 +1,238 @@
+<!-- 
+  テンプレート　
+
+  全ファイル共通の設定がしてあります。
+  このファイルをコピーし、内容を追加していきます。 
+-->
+
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Bootstrap 5.3.0 -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
+      crossorigin="anonymous"
+    />
+
+    <!-- Googleフォント -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;500&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- 独自スタイルシート -->
+    <link href="css/custom.css" rel="stylesheet" />
+
+    <!-- ＝＝＝　これ以降を編集します　＝＝＝＝＝＝ -->
+
+    <!-- 作成者情報 -->
+    <meta name="description" content="2024システムデザインⅠ演習" />
+    <meta
+      name="author"
+      content="クラス:CT1 学籍番号:12345678 氏名:〇〇　〇〇"
+    />
+
+    <title>着地一覧(例)</title>
+  </head>
+
+  <body>
+    <!-- メニュー挿入 -->
+    <div id="menu"></div>
+
+    <!-- コンテンツ（ページ表示内容）はここ以降に作成します -->
+    <div class="container my-4">
+      <!-- 新しい着地を入力するフォーム -->
+      <h4>着地を入力</h4>
+      <form id="addLandingForm" class="mb-4">
+        <div class="row">
+          <div class="col-md-3">
+            <label for="landingDate" class="form-label">日付</label>
+            <input type="date" class="form-control" id="landingDate" required>
+          </div>
+          <div class="col-md-3">
+            <label for="landingTime" class="form-label">時刻</label>
+            <input type="time" class="form-control" id="landingTime" required>
+          </div>
+          <div class="col-md-3">
+            <label for="vehicleNumber" class="form-label">号車</label>
+            <input type="text" class="form-control" id="vehicleNumber" required>
+          </div>
+          <div class="col-md-3">
+            <label for="employeeCode" class="form-label">社員コード</label>
+            <input type="text" class="form-control" id="employeeCode" pattern="[A-Za-z0-9]{3}" title="英数字3桁で入力してください" required>
+          </div>
+        </div>
+        <div class="row mt-2">
+          <div class="col-md-3">
+            <label for="customerCode" class="form-label">取引先コード</label>
+            <input type="text" class="form-control" id="customerCode" required>
+          </div>
+          <div class="col-md-3">
+            <label for="landingCode" class="form-label">着地コード</label>
+            <input type="text" class="form-control" id="landingCode" required>
+          </div>
+          <div class="col-md-3">
+            <label for="tollAmount" class="form-label">高速代</label>
+            <input type="number" class="form-control" id="tollAmount" required>
+          </div>
+          <div class="col-md-3 d-flex align-items-end">
+            <button type="submit" class="btn btn-primary">登録</button>
+          </div>
+        </div>
+      </form>
+      
+      <!-- 着地一覧のタイトル -->
+      <h4>着地一覧</h4>
+      
+      <!-- 着地一覧のテーブル -->
+      <table class="table table-bordered">
+        <thead class="table-light">
+          <tr>
+            <th>氏名</th>
+            <th>取引先</th>
+            <th>着地</th>
+            <th>金額</th>
+            <th>詳細</th>
+            <th>編集</th>
+          </tr>
+        </thead>
+        <tbody id="landingTableBody">
+          <!-- サンプル1 -->
+          <tr>
+            <td>山田 太郎</td>
+            <td>○○食品</td>
+            <td>豊田市</td>
+            <td>¥22,000</td>
+            <td><button class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#detailsModal-1">詳細</button></td>
+            <td><button class="btn btn-warning btn-sm editBtn">編集</button></td>
+          </tr>
+          <!-- サンプル2 -->
+          <tr>
+            <td>鈴木 次郎</td>
+            <td>○○部品工業</td>
+            <td>桑名市</td>
+            <td>¥15,500</td>
+            <td><button class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#detailsModal-2">詳細</button></td>
+            <td><button class="btn btn-warning btn-sm editBtn">編集</button></td>
+          </tr>
+          <!-- サンプル3 -->
+          <tr>
+            <td>佐藤 花子</td>
+            <td>○○印刷</td>
+            <td>名古屋西</td>
+            <td>¥16,000</td>
+            <td><button class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#detailsModal-3">詳細</button></td>
+            <td><button class="btn btn-warning btn-sm editBtn">編集</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    
+   <!-- 詳細モーダル1 -->
+<div class="modal fade" id="detailsModal-1" tabindex="-1" aria-labelledby="detailsModalLabel-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="detailsModalLabel-1">着地詳細 - 豊田市</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <ul>
+          <li><strong>日付:</strong> 2025/01/15</li>
+          <li><strong>時刻:</strong> 14:30</li>
+          <li><strong>号車:</strong> G-01</li>
+          <li><strong>社員コード:</strong> A01</li>
+          <li><strong>取引先コード:</strong> TK-01</li>
+          <li><strong>着地コード:</strong> A-54</li>
+          <li><strong>高速代:</strong> --</li>
+        </ul>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">閉じる</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 詳細モーダル2 -->
+<div class="modal fade" id="detailsModal-2" tabindex="-1" aria-labelledby="detailsModalLabel-2" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="detailsModalLabel-2">着地詳細 - 桑名市</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <ul>
+          <li><strong>日付:</strong> 2025/01/10</li>
+          <li><strong>時刻:</strong> 09:00</li>
+          <li><strong>号車:</strong> G-02</li>
+          <li><strong>社員コード:</strong> B23</li>
+          <li><strong>取引先コード:</strong> TK-23</li>
+          <li><strong>着地コード:</strong> A-87</li>
+          <li><strong>高速代:</strong> ¥3,000</li>
+        </ul>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">閉じる</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 詳細モーダル3 -->
+<div class="modal fade" id="detailsModal-3" tabindex="-1" aria-labelledby="detailsModalLabel-3" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="detailsModalLabel-3">着地詳細 - 名古屋西</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <ul>
+          <li><strong>日付:</strong> 2025/01/20</li>
+          <li><strong>時刻:</strong> 16:45</li>
+          <li><strong>号車:</strong> G-03</li>
+          <li><strong>社員コード:</strong> C45</li>
+          <li><strong>取引先コード:</strong> TK-45</li>
+          <li><strong>着地コード:</strong> A-24</li>
+          <li><strong>高速代:</strong> --</li>
+        </ul>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">閉じる</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+    
+    
+    <!-- コンテンツ（ページ表示内容）ここまで -->
+    <!--  ＝＝＝　これ以降は、共通部分。編集しないでください　＝＝＝＝＝＝ -->
+    <!-- Menu挿入 -->
+    <script>
+      fetch("menu.html")
+        .then((response) => response.text())
+        .then((data) => (document.querySelector("#menu").innerHTML = data));
+    </script>
+
+    <!-- BootstrapScript -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+      crossorigin="anonymous"
+    ></script>
+    <!-- 独自JavaScript -->
+    <script src="js/custom.js"></script>
+  </body>
+</html>

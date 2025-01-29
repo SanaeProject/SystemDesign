@@ -1,0 +1,82 @@
+<!-- 
+  テンプレート　
+
+  全ファイル共通の設定がしてあります。
+  このファイルをコピーし、内容を追加していきます。 
+-->
+
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Bootstrap 5.3.0 -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
+      crossorigin="anonymous"
+    />
+
+    <!-- Googleフォント -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;500&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- 独自スタイルシート -->
+    <link href="css/custom.css" rel="stylesheet" />
+
+    <!-- ＝＝＝　これ以降を編集します　＝＝＝＝＝＝ -->
+
+    <!-- 作成者情報 -->
+    <meta name="description" content="2024システムデザインⅠ演習" />
+    <meta
+      name="author"
+      content="クラス:CT1 学籍番号:12345678 氏名:〇〇　〇〇"
+    />
+    <title>取引先一覧</title>
+  </head>
+
+  <body>
+    <!-- メニュー挿入 -->
+    <div id="menu"></div>
+
+    <!-- コンテンツ（ページ表示内容）はここ以降に作成します -->
+    <h1>取引先一覧</h1>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>食品</th>
+          <th>工業</th>
+          <th>その他</th>
+        </tr>
+      </thead>
+    </table>
+    <p>
+      ○○食品
+      ○○工業
+      ○○○○  
+    </p>
+    <!-- コンテンツ（ページ表示内容）ここまで -->
+    <!--  ＝＝＝　これ以降は、共通部分。編集しないでください　＝＝＝＝＝＝ -->
+    <!-- Menu挿入 -->
+    <script>
+      fetch("../menu.html")
+        .then((response) => response.text())
+        .then((data) => (document.querySelector("#menu").innerHTML = data));
+    </script>
+
+    <!-- BootstrapScript -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+      crossorigin="anonymous"
+    ></script>
+    <!-- 独自JavaScript -->
+    <script src="js/custom.js"></script>
+  </body>
+</html>
