@@ -1,0 +1,61 @@
+<div class="w-100">
+  <nav class="navbar navbar-light bg-light">
+    <div class="container-fluid">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse pt-2" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="../home/home.html" onclick="handleLocationClick('ホーム', event);">ホーム</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" id="masterDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              マスタ
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="masterDropdown">
+              <li><a class="dropdown-item" href="#" onclick="handleLocationClick('マスタ', event);">取引先一覧</a></li>
+              <li><a class="dropdown-item" href="#" onclick="handleLocationClick('マスタ', event);">着地一覧</a></li>
+              <li><a class="dropdown-item" href="../master/driver_list.html" onclick="handleLocationClick('マスタ', event);">ドライバー一覧</a></li>
+              <li><a class="dropdown-item" href="../master/settings.html" onclick="handleLocationClick('マスタ', event);">設定</a></li>
+            </ul>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" id="taskDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              作業
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="taskDropdown">
+              <li><a class="dropdown-item" href="../task/input.html" onclick="handleLocationClick('作業', event);">作業一覧</a></li>
+            </ul>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" id="ledgerDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              帳票
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="ledgerDropdown">
+              <li><a class="dropdown-item" href="../ledger/invoice-list.html" onclick="handleLocationClick('帳票', event);">請求書一覧</a></li>
+              <li><a class="dropdown-item" href="#" onclick="handleLocationClick('帳票', event);">個人売上表一覧</a></li>
+            </ul>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" id="analysisDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              分析
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="analysisDropdown">
+              <li><a class="dropdown-item" href="#" onclick="handleLocationClick('分析', event);">取引先別売上一覧</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <div class="position-absolute top-0" style="margin-left: 90px;">
+    <p class="mt-2 fs-2 text-dark-emphasis" id="location-parent"></p>
+  </div>
+  <div class="position-absolute top-0 end-0" style="margin-right: 150px;">
+    <p class="mt-2 fs-4 text-dark-emphasis" id="date-time"></p>
+  </div>
+  <div class="position-absolute top-0 end-0 pt-2 pe-2">
+    <a  class="btn btn-outline-dark bg-dark bg-opacity-25 text-decoration-none fs-6" href="../login.html">ログアウト</a>
+  </div>
+</div>

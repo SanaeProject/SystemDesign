@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Bootstrap 5.3.0 -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
+      crossorigin="anonymous"
+    >
+
+    <!-- Googleフォント -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" >
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin >
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;500&display=swap"
+      rel="stylesheet"
+   >
+
+    <!-- 独自スタイルシート -->
+    <link href="../css/custom.css" rel="stylesheet">
+
+    <style>
+      main {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+      }
+      .driver-table {
+        width: 100%;
+        margin-bottom: 20px;
+      }
+      .driver-table th, .driver-table td {
+        text-align: center;
+        vertical-align: middle;
+      }
+      .detail-btn {
+        cursor: pointer;
+      }
+      .edit-form {
+        display: none;
+        margin-top: 20px;
+      }
+      .edit-form input {
+        margin-bottom: 10px;
+      }
+    </style>
+
+    <title>Driver Management</title>
+  </head>
+
+  <body>
+    <header id="header"></header>
+
+    <main>
+      <section>
+        <div class="title-container">
+          <h1>ドライバー一覧</h1>
+        </div>
+      </section>
+      <section>
+        <div class="content-container">
+          <h2>ドライバ情報</h2>
+          <table class="table driver-table table-bordered">
+            <thead>
+              <tr>
+                <th>ドライバコード</th>
+                <th>名前</th>
+                <th>入社年月日</th>
+                <th>詳細</th>
+              </tr>
+            </thead>
+            <tbody id="driverTableBody">
+              <tr>
+                <td>001</td>
+                <td>山田 太郎</td>
+                <td>2020-05-01</td>
+                <td><button class="btn btn-info detail-btn" onclick="showDetails(1)">詳細</button></td>
+              </tr>
+              <tr>
+                <td>002</td>
+                <td>佐藤 花子</td>
+                <td>2018-07-15</td>
+                <td><button class="btn btn-info detail-btn" onclick="showDetails(2)">詳細</button></td>
+              </tr>
+            </tbody>
+          </table>
+    
+          <div class="edit-form" id="editForm">
+            <h4>ドライバ詳細情報</h4>
+            <form>
+              <div class="mb-3">
+                <label for="name" class="form-label">名前</label>
+                <input type="text" class="form-control" id="name" required>
+              </div>
+              <div class="mb-3">
+                <label for="startYear" class="form-label">勤続開始年</label>
+                <input type="number" class="form-control" id="startYear" required>
+              </div>
+              <div class="mb-3">
+                <label for="endYear" class="form-label">勤務終了年</label>
+                <input type="number" class="form-control" id="endYear">
+              </div>
+              <div class="mb-3">
+                <label for="accidents" class="form-label">事故件数</label>
+                <input type="number" class="form-control" id="accidents">
+              </div>
+              <div class="mb-3">
+                <label for="commissionRate" class="form-label">歩合率</label>
+                <input type="number" class="form-control" id="commissionRate" step="0.01">
+              </div>
+              <div class="mb-3">
+                <label for="accountNumber" class="form-label">口座番号</label>
+                <input type="text" class="form-control" id="accountNumber">
+              </div>
+              <div class="mb-3">
+                <label for="phoneNumber" class="form-label">電話番号</label>
+                <input type="tel" class="form-control" id="phoneNumber">
+              </div>
+              <div class="mb-3">
+                <label for="email" class="form-label">メールアドレス</label>
+                <input type="email" class="form-control" id="email">
+              </div>
+              <button type="submit" class="btn btn-primary">保存</button>
+              <button type="button" class="btn btn-secondary" onclick="hideDetails()">キャンセル</button>
+            </form>
+          </div>
+    
+          <hr>
+    
+          <h3>新しいドライバを追加</h3>
+          <form id="addDriverForm">
+            <div class="mb-3">
+              <label for="newDriverName" class="form-label">名前</label>
+              <input type="text" class="form-control" id="newDriverName" required>
+            </div>
+            <div class="mb-3">
+              <label for="newDriverStartDate" class="form-label">入社年月日</label>
+              <input type="date" class="form-control" id="newDriverStartDate" required>
+            </div>
+            <button type="submit" class="btn btn-success">ドライバを追加</button>
+          </form>
+        </div>
+      </section>
+      
+    </main>
+
+    <script>
+      function showDetails(driverId) {
+        // 詳細情報フォームを表示
+        document.getElementById('editForm').style.display = 'block';
+        
+        // デモ用データ。実際のデータ取得方法に合わせて変更してください
+        const driverData = {
+          1: { name: '山田 太郎', startYear: 2020, endYear: 2025, accidents: 3, commissionRate: 0.1, accountNumber: '1234567890', phoneNumber: '090-1234-5678', email: 'yamada@example.com' },
+          2: { name: '佐藤 花子', startYear: 2018, endYear: 2023, accidents: 2, commissionRate: 0.15, accountNumber: '0987654321', phoneNumber: '080-9876-5432', email: 'sato@example.com' }
+        };
+
+        const driver = driverData[driverId];
+
+        document.getElementById('name').value = driver.name;
+        document.getElementById('startYear').value = driver.startYear;
+        document.getElementById('endYear').value = driver.endYear;
+        document.getElementById('accidents').value = driver.accidents;
+        document.getElementById('commissionRate').value = driver.commissionRate;
+        document.getElementById('accountNumber').value = driver.accountNumber;
+        document.getElementById('phoneNumber').value = driver.phoneNumber;
+        document.getElementById('email').value = driver.email;
+      }
+
+      function hideDetails() {
+        // 詳細情報フォームを非表示
+        document.getElementById('editForm').style.display = 'none';
+      }
+
+      document.getElementById('addDriverForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        
+        const name = document.getElementById('newDriverName').value;
+        const startDate = document.getElementById('newDriverStartDate').value;
+
+        // 新しいドライバの情報をテーブルに追加
+        const tableBody = document.getElementById('driverTableBody');
+        const newRow = document.createElement('tr');
+        newRow.innerHTML = `
+          <td>新規</td>
+          <td>${name}</td>
+          <td>${startDate}</td>
+          <td><button class="btn btn-info detail-btn" onclick="showDetails('new')">詳細</button></td>
+        `;
+        tableBody.appendChild(newRow);
+
+        // フォームをリセット
+        document.getElementById('addDriverForm').reset();
+      });
+    </script>
+
+    <!-- BootstrapScript -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+      crossorigin="anonymous"
+    ></script>
+
+    <script src="../js/custom.js"></script>
+  </body>
+</html>

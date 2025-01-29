@@ -1,0 +1,222 @@
+const invoices = [
+    {
+        id: "INV-2025200001",
+        client: "○○部品工業株式会社",
+        date: [2025, 2, 31],
+        amount: 491700,
+        items: [
+            { date: "1月1日", location: "セントレア", amount: 21000 },
+            { date: "1月2日", location: "セントレア", amount: 21000 },
+            { date: "1月4日", location: "桑名市", amount: 15500 },
+            { date: "1月5日", location: "幸田町", amount: 22000 },
+            { date: "1月6日", location: "桑名市", amount: 15500 },
+            { date: "1月7日", location: "安城市", amount: 10000 },
+            { date: "1月9日", location: "桑名市", amount: 15500 },
+            { date: "1月10日", location: "セントレア", amount: 21000 },
+            { date: "1月11日", location: "長久手町", amount: 20000 },
+            { date: "1月12日", location: "瀬戸市", amount: 10000 },
+            { date: "1月13日", location: "セントレア", amount: 21000 },
+            { date: "1月15日", location: "長久手町", amount: 20000 },
+            { date: "1月17日", location: "湖西市", amount: 25000 },
+            { date: "1月18日", location: "浜松市", amount: 20000 },
+            { date: "1月20日", location: "浜松市", amount: 20000 },
+            { date: "1月21日", location: "セントレア", amount: 21000 },
+            { date: "1月22日", location: "長久手町", amount: 20000 },
+            { date: "1月23日", location: "安城市", amount: 10000 },
+            { date: "1月24日", location: "長久手町", amount: 20000 },
+            { date: "1月25日", location: "セントレア", amount: 21000 },
+            { date: "1月26日", location: "桑名市", amount: 15500 },
+            { date: "1月27日", location: "セントレア", amount: 21000 },
+            { date: "1月29日", location: "長久手町", amount: 20000 },
+            { date: "1月31日", location: "セントレア", amount: 21000 }
+        ]
+    },
+    {
+        id: "INV-2025200002",
+        client: "△△製作所",
+        date: [2025, 2, 31],
+        amount: 385000,
+        items: [
+            { date: "1月1日", location: "幸田町", amount: 22000 },
+            { date: "1月2日", location: "桑名市", amount: 15500 },
+            { date: "1月4日", location: "安城市", amount: 10000 },
+            { date: "1月5日", location: "幸田町", amount: 22000 },
+            { date: "1月6日", location: "桑名市", amount: 15500 },
+            { date: "1月8日", location: "幸田町", amount: 22000 },
+            { date: "1月9日", location: "瀬戸市", amount: 10000 },
+            { date: "1月11日", location: "安城市", amount: 10000 },
+            { date: "1月12日", location: "幸田町", amount: 22000 },
+            { date: "1月14日", location: "桑名市", amount: 15500 },
+            { date: "1月15日", location: "幸田町", amount: 22000 },
+            { date: "1月16日", location: "瀬戸市", amount: 10000 },
+            { date: "1月18日", location: "桑名市", amount: 15500 },
+            { date: "1月19日", location: "安城市", amount: 10000 },
+            { date: "1月21日", location: "幸田町", amount: 22000 },
+            { date: "1月22日", location: "桑名市", amount: 15500 },
+            { date: "1月24日", location: "瀬戸市", amount: 10000 },
+            { date: "1月25日", location: "春日井市", amount: 17500 },
+            { date: "1月27日", location: "桑名市", amount: 15500 },
+            { date: "1月28日", location: "安城市", amount: 10000 },
+            { date: "1月30日", location: "幸田町", amount: 22000 },
+            { date: "1月31日", location: "桑名市", amount: 15500 }
+        ]
+    },
+    {
+        id: "INV-2025200003",
+        client: "××精工",
+        date: [2025, 2, 31],
+        amount: 420000,
+        items: [
+            { date: "1月1日", location: "豊田市", amount: 20000 },
+            { date: "1月3日", location: "岡崎市", amount: 18000 },
+            { date: "1月5日", location: "豊田市", amount: 20000 },
+            { date: "1月7日", location: "刈谷市", amount: 15000 },
+            { date: "1月9日", location: "豊田市", amount: 20000 },
+            { date: "1月11日", location: "岡崎市", amount: 18000 },
+            { date: "1月13日", location: "豊田市", amount: 20000 },
+            { date: "1月15日", location: "刈谷市", amount: 15000 },
+            { date: "1月17日", location: "豊田市", amount: 20000 },
+            { date: "1月19日", location: "岡崎市", amount: 18000 },
+            { date: "1月21日", location: "豊田市", amount: 20000 },
+            { date: "1月23日", location: "刈谷市", amount: 15000 },
+            { date: "1月25日", location: "豊田市", amount: 20000 },
+            { date: "1月27日", location: "岡崎市", amount: 18000 },
+            { date: "1月29日", location: "豊田市", amount: 20000 },
+            { date: "1月31日", location: "刈谷市", amount: 15000 }
+        ]
+    },
+    {
+        id: "INV-2025200004",
+        client: "□□自動車",
+        date: [2025, 2, 31],
+        amount: 525000,
+        items: [
+            { date: "1月2日", location: "豊橋市", amount: 35000 },
+            { date: "1月5日", location: "豊橋市", amount: 35000 },
+            { date: "1月8日", location: "豊橋市", amount: 35000 },
+            { date: "1月11日", location: "豊橋市", amount: 35000 },
+            { date: "1月14日", location: "豊橋市", amount: 35000 },
+            { date: "1月17日", location: "豊橋市", amount: 35000 },
+            { date: "1月20日", location: "豊橋市", amount: 35000 },
+            { date: "1月23日", location: "豊橋市", amount: 35000 },
+            { date: "1月26日", location: "豊橋市", amount: 35000 },
+            { date: "1月29日", location: "豊橋市", amount: 35000 }
+        ]
+    },
+    {
+        id: "INV-2025200005",
+        client: "◇◇金属工業",
+        date: [2025, 2, 31],
+        amount: 310000,
+        items: [
+            { date: "1月1日", location: "西尾市", amount: 19000 },
+            { date: "1月4日", location: "安城市", amount: 10000 },
+            { date: "1月7日", location: "西尾市", amount: 19000 },
+            { date: "1月10日", location: "碧南市", amount: 16000 },
+            { date: "1月13日", location: "西尾市", amount: 19000 },
+            { date: "1月16日", location: "安城市", amount: 10000 },
+            { date: "1月19日", location: "西尾市", amount: 19000 },
+            { date: "1月22日", location: "碧南市", amount: 16000 },
+            { date: "1月25日", location: "西尾市", amount: 19000 },
+            { date: "1月28日", location: "安城市", amount: 10000 },
+            { date: "1月31日", location: "西尾市", amount: 19000 }
+        ]
+    },
+    {
+        id: "INV-2025200006",
+        client: "▽▽電機",
+        date: [2025, 2, 31],
+        amount: 456000,
+        items: [
+            { date: "1月2日", location: "春日井市", amount: 17500 },
+            { date: "1月4日", location: "小牧市", amount: 16000 },
+            { date: "1月6日", location: "春日井市", amount: 17500 },
+            { date: "1月8日", location: "小牧市", amount: 16000 },
+            { date: "1月10日", location: "春日井市", amount: 17500 },
+            { date: "1月12日", location: "小牧市", amount: 16000 },
+            { date: "1月14日", location: "春日井市", amount: 17500 },
+            { date: "1月16日", location: "小牧市", amount: 16000 },
+            { date: "1月18日", location: "春日井市", amount: 17500 },
+            { date: "1月20日", location: "小牧市", amount: 16000 },
+            { date: "1月22日", location: "春日井市", amount: 17500 },
+            { date: "1月24日", location: "小牧市", amount: 16000 },
+            { date: "1月26日", location: "春日井市", amount: 17500 },
+            { date: "1月28日", location: "小牧市", amount: 16000 },
+            { date: "1月30日", location: "春日井市", amount: 17500 }
+        ]
+    },
+    {
+        id: "INV-2025200007",
+        client: "◎◎製作所",
+        date: [2025, 2, 31],
+        amount: 378000,
+        items: [
+            { date: "1月3日", location: "蒲郡市", amount: 21000 },
+            { date: "1月6日", location: "蒲郡市", amount: 21000 },
+            { date: "1月9日", location: "蒲郡市", amount: 21000 },
+            { date: "1月12日", location: "蒲郡市", amount: 21000 },
+            { date: "1月15日", location: "蒲郡市", amount: 21000 },
+            { date: "1月18日", location: "蒲郡市", amount: 21000 },
+            { date: "1月21日", location: "蒲郡市", amount: 21000 },
+            { date: "1月24日", location: "蒲郡市", amount: 21000 },
+            { date: "1月27日", location: "蒲郡市", amount: 21000 },
+            { date: "1月30日", location: "蒲郡市", amount: 21000 }
+        ]
+    },
+    {
+        id: "INV-2025200008",
+        client: "▲▲重工業",
+        date: [2025, 2, 31],
+        amount: 495000,
+        items: [
+            { date: "1月1日", location: "知多市", amount: 23000 },
+            { date: "1月4日", location: "東海市", amount: 20000 },
+            { date: "1月7日", location: "大府市", amount: 18000 },
+            { date: "1月10日", location: "知多市", amount: 23000 },
+            { date: "1月13日", location: "東海市", amount: 20000 },
+            { date: "1月16日", location: "大府市", amount: 18000 },
+            { date: "1月19日", location: "知多市", amount: 23000 },
+            { date: "1月22日", location: "東海市", amount: 20000 },
+            { date: "1月25日", location: "大府市", amount: 18000 },
+            { date: "1月28日", location: "知多市", amount: 23000 },
+            { date: "1月31日", location: "東海市", amount: 20000 }
+        ]
+    },
+    {
+        id: "INV-2025200009",
+        client: "■■工業",
+        date: [2025, 2, 31],
+        amount: 402000,
+        items: [
+            { date: "1月2日", location: "一宮市", amount: 25000 },
+            { date: "1月5日", location: "稲沢市", amount: 22000 },
+            { date: "1月8日", location: "一宮市", amount: 25000 },
+            { date: "1月11日", location: "稲沢市", amount: 22000 },
+            { date: "1月14日", location: "一宮市", amount: 25000 },
+            { date: "1月17日", location: "稲沢市", amount: 22000 },
+            { date: "1月20日", location: "一宮市", amount: 25000 },
+            { date: "1月23日", location: "稲沢市", amount: 22000 },
+            { date: "1月26日", location: "一宮市", amount: 25000 },
+            { date: "1月29日", location: "稲沢市", amount: 22000 }
+        ]
+    },
+    {
+        id: "INV-2025200010",
+        client: "☆☆産業",
+        date: [2025, 2, 31],
+        amount: 445000,
+        items: [
+            { date: "1月1日", location: "江南市", amount: 24000 },
+            { date: "1月4日", location: "犬山市", amount: 21000 },
+            { date: "1月7日", location: "江南市", amount: 24000 },
+            { date: "1月10日", location: "犬山市", amount: 21000 },
+            { date: "1月13日", location: "江南市", amount: 24000 },
+            { date: "1月16日", location: "犬山市", amount: 21000 },
+            { date: "1月19日", location: "江南市", amount: 24000 },
+            { date: "1月22日", location: "犬山市", amount: 21000 },
+            { date: "1月25日", location: "江南市", amount: 24000 },
+            { date: "1月28日", location: "犬山市", amount: 21000 },
+            { date: "1月31日", location: "江南市", amount: 24000 }
+        ]
+    }
+];
