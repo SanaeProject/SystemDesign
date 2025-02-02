@@ -1,16 +1,132 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8">
-        <title>Analysis</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="">
-    </head>
-    <body>
-        <!--[if lt IE 7]>
-            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
-        <![endif]-->
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Bootstrap 5.3.0 -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
+      crossorigin="anonymous"
+    />
+
+    <!-- Googleフォント -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;500&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- 独自スタイルシート -->
+    <link href="../css/custom.css" rel="stylesheet" />
+
+    <!-- ＝＝＝　これ以降を編集します　＝＝＝＝＝＝ -->
+
+    <!-- 作成者情報 -->
+    <meta name="description" content="2024システムデザインⅠ演習" />
+    <meta
+      name="author"
+      content="クラス:CT1A 学籍番号:20246124 氏名:布目 純大"
+    />
+
+    <!-- Chart.jsのCDNを追加 -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <title>Analysis</title>
+  </head>
+
+  <body>
+    <!-- ヘッダー挿入 -->
+    <header id="header"></header>
+
+    <!-- コンテンツ（ページ表示内容）はここ以降に作成します -->
+    <main class="container-fluid p-4">
+        <div class="title-container">
+            <h1>取引先別売上一覧</h1>
+        </div>
+        <div class="pt-5">
+            <div class="container">
+            </div>
+        </div>
         
-        <script src="" async defer></script>
-    </body>
+        
+    </main>
+    <!-- コンテンツ（ページ表示内容）ここまで -->
+
+    <!-- BootstrapScript -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+      crossorigin="anonymous"
+    ></script>
+                             
+    <!-- 独自JavaScript -->
+    <script src="../js/custom.js"></script>
+    <script src="../js/invoice-data.js"></script>
+    <script>
+        window.addEventListener('DOMContentLoaded', function () {
+            const parentElement = document.querySelector('.container');
+
+            invoices.forEach((invoice, index) => {
+                const rowElement = document.createElement('div');
+                const colElement1 = document.createElement('div');
+                const colElement2 = document.createElement('div');
+                const clientElement = document.createElement('div');
+                const chartElement = document.createElement('div');
+
+                rowElement.classList.add('row');
+                colElement1.classList.add('col-4');
+                clientElement.classList.add('card');
+                clientElement.classList.add('client');
+                colElement2.classList.add('col-4');
+                colElement2.classList.add('flex-fill');
+                chartElement.classList.add('card');
+                chartElement.classList.add('chart');
+
+                clientElement.innerText = invoice.client;
+
+                colElement1.appendChild(clientElement);
+                colElement2.appendChild(chartElement);
+                rowElement.appendChild(colElement1);
+                rowElement.appendChild(colElement2);
+                parentElement.appendChild(rowElement);
+            });
+        });
+    </script>
+    <!-- <script>
+        // グラフのデータと設定
+        var ctx = document.getElementById('salesChart').getContext('2d');
+        var salesChart = new Chart(ctx, {
+            type: 'bar', // グラフの種類
+            data: {
+                labels: ['取引先A', '取引先B', '取引先C'], // ラベル
+                datasets: [{
+                    label: '売上',
+                    data: [12, 19, 3], // 売上データ
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script> -->
+  </body>
 </html>
