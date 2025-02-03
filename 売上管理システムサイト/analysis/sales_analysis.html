@@ -36,8 +36,16 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
-        .rowElem{
-            max-height: 90vh;
+        .canvas-container{
+            width: 100%;
+            margin: 0 20px;
+        }
+        .radio {
+            margin: 60px 20px 0 0;
+            z-index: 1000;
+        }
+        canvas {
+            margin: auto;
         }
     </style>
 
@@ -50,54 +58,50 @@
 
     <!-- コンテンツ（ページ表示内容）はここ以降に作成します -->
     <main class="container-fluid p-4">
+        <div class="radio card p-2 position-fixed top-0 end-0">
+            <form id="chartSelect" name="chartSelect" class="search-box d-flex flex-column">
+                <label>
+                    <input	type="checkbox"
+                            name="chart"
+                            value="totalSalesTrend"
+                            checked>
+                    売上推移
+                </label>
+                <label>
+                    <input	type="checkbox"
+                            name="chart"
+                            value="yearComparison"
+                            checked>
+                    前年比
+                </label>
+                <label>
+                    <input	type="checkbox"
+                            name="chart"
+                            value="monthlySales"
+                            checked>
+                    月別売上
+                </label>
+                <label>
+                    <input	type="checkbox"
+                            name="chart"
+                            value="monthComparison"
+                            checked>
+                    先月比
+                </label>
+            </form>
+        </div>
         <div class="title-container">
             <h1>取引先別売上一覧</h1>
         </div>
         <div class="container">
-            <div class="w-100 d-flex justify-content-around pt-5">
-                <div class="search-box flex-grow-1 me-5">
-                    <label>取引先名</label>
-                    <select name="client-name" id="client-select"class="w-100">
-                        <option value="all">すべて</option>
-                    </select>
-                </div>
-                <form id="chartSelect" name="chartSelect" class="search-box d-flex flex-column">
-                    <label>
-                        <input	type="checkbox"
-                                name="chart"
-                                value="totalSalesTrend"
-                                checked>
-                        売上推移
-                    </label>
-                    <label>
-                        <input	type="checkbox"
-                                name="chart"
-                                value="yearComparison"
-                                checked>
-                        前年比
-                    </label>
-                    <label>
-                        <input	type="checkbox"
-                                name="chart"
-                                value="monthlySales"
-                                checked>
-                        月別売上
-                    </label>
-                    <label>
-                        <input	type="checkbox"
-                                name="chart"
-                                value="monthComparison"
-                                checked>
-                        先月比
-                    </label>
-                </form>
+            <div class="search-box flex-grow-1 m-5 ms-0">
+                <label>取引先名</label>
+                <select name="client-name" id="client-select"class="w-100" style="height: 50px;">
+                    <option value="all">すべて</option>
+                </select>
             </div>
-            <div class="tableElem container card py-3">
-
-            </div>
+            <div class="tableElem container card py-3"></div>
         </div>
-        
-        
     </main>
     <!-- コンテンツ（ページ表示内容）ここまで -->
 
@@ -114,6 +118,10 @@
     <script>
         const formElem = document.querySelector('form');
         const selectBox = document.getElementById('client-select');
+        let totalSalesChart = [];
+        let monthComparisonChart = [];
+        let yearComparisonChart = [];
+        let monthlySalesChart = [];
 
         formElem.addEventListener('change', function () {
             const radioForm = document.chartSelect.chart;
@@ -121,6 +129,7 @@
             console.log(radioForm);
             Array.from(canvasElems).forEach((canvas) => {
                 canvas.classList.add('d-none');
+
             });
             Array.from(radioForm).forEach((radio) => {
                 if (radio.checked){
@@ -165,11 +174,19 @@
                         <div class="col-4 border-end border-3 w-25">
                             <div class="my-2">${invoice.client}</div>
                         </div>
-                        <div class="col-4 flex-fill align-content-center d-flex flex-column justify-content-around">
-                            <canvas id="totalSalesTrend-${invoice.id}" height="100%" name="totalSalesTrend"></canvas>
-                            <canvas id="yearComparison-${invoice.id}" height="100%" name="yearComparison"></canvas>
-                            <canvas id="monthlySales-${invoice.id}" height="100%" name="monthlySales"></canvas>
-                            <canvas id="monthComparison-${invoice.id}" height="100%" name="monthComparison"></canvas>
+                        <div class="col-4 flex-fill row">
+                            <div class="canvas-container m-auto">
+                                <canvas id="totalSalesTrend-${invoice.id}" name="totalSalesTrend"></canvas>
+                            </div>
+                            <div class="canvas-container m-auto">
+                                <canvas id="yearComparison-${invoice.id}" name="yearComparison"></canvas>
+                            </div>
+                            <div class="canvas-container m-auto">
+                                <canvas id="monthlySales-${invoice.id}" name="monthlySales"></canvas>
+                            </div>
+                            <div class="canvas-container m-auto">
+                                <canvas id="monthComparison-${invoice.id}" name="monthComparison"></canvas>
+                            </div>
                         </div>
                     </div>
                 `;
@@ -178,7 +195,7 @@
 
                 // 合計売上の推移
                 const totalSalesCtx = document.getElementById(`totalSalesTrend-${invoice.id}`).getContext('2d');
-                const totalSalesChart = new Chart(totalSalesCtx, {
+                totalSalesChart.push(new Chart(totalSalesCtx, {
                     type: 'line',
                     data: {
                         labels: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
@@ -191,18 +208,20 @@
                         }]
                     },
                     options: {
+                        animation: false,
                         responsive: false,
                         scales: {
                             y: {
                                 beginAtZero: true
                             }
-                        }
+                        },
+                        maintainAspectRatio: false
                     }
-                });
+                }));
 
                 // 月別の売上
                 const monthlySalesCtx = document.getElementById(`monthlySales-${invoice.id}`).getContext('2d');
-                const monthlySalesChart = new Chart(monthlySalesCtx, {
+                monthlySalesChart.push(new Chart(monthlySalesCtx, {
                     type: 'bar',
                     data: {
                         labels: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
@@ -215,18 +234,20 @@
                         }]
                     },
                     options: {
+                        animation: false,
                         responsive: false,
                         scales: {
                             y: {
                                 beginAtZero: true
                             }
-                        }
+                        },
+                        maintainAspectRatio: false
                     }
-                });
+                }));
 
                 // 前年との比較
                 const yearComparisonCtx = document.getElementById(`yearComparison-${invoice.id}`).getContext('2d');
-                const yearComparisonChart = new Chart(yearComparisonCtx, {
+                yearComparisonChart.push(new Chart(yearComparisonCtx, {
                     type: 'line',
                     data: {
                         labels: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
@@ -248,18 +269,20 @@
                         ]
                     },
                     options: {
+                        animation: false,
                         responsive: false,
                         scales: {
                             y: {
                                 beginAtZero: true,
                             }
-                        }
+                        },
+                        maintainAspectRatio: false
                     }
-                });
+                }));
 
                 // 先月との比較
                 const monthComparisonCtx = document.getElementById(`monthComparison-${invoice.id}`).getContext('2d');
-                const monthComparisonChart = new Chart(monthComparisonCtx, {
+                monthComparisonChart.push(new Chart(monthComparisonCtx, {
                     type: 'bar',
                     data: {
                         labels: ['先月', '今月'],
@@ -272,14 +295,16 @@
                         }]
                     },
                     options: {
+                        animation: false,
                         responsive: false,
                         scales: {
                             y: {
                                 beginAtZero: true
                             }
-                        }
+                        },
+                        maintainAspectRatio: false
                     }
-                });
+                }));
 
                 const option = document.createElement('option');
                 option.setAttribute('value', `${index}`)
