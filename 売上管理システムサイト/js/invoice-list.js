@@ -13,9 +13,18 @@ function printInvoice(invoiceId) {
         alert('請求書が見つかりません。');
         return;
     }
+    
+    const cN = invoice.client;
+    const clientName = cN.split('');
+    function getClientName() {
+        let name = "";
+        Array.from(clientName).forEach((item) => {
+            name += `${item} `;
+        }); 
+        return name;
+    }
 
     console.log(invoice.date[1] == 1 ? 12 : invoice.date[1] - 1);
-
     const printWindow = window.open('', '_blank');
     printWindow.document.write(`
         <html>
@@ -45,54 +54,52 @@ function printInvoice(invoiceId) {
                         text-align: right;
                         font-weight: bold;
                     }
-                    .footer {
-                        margin-top: 20px;
-                        border-top: 1px solid black;
-                        padding-top: 10px;
+                    .wrapper {
+                        display: flex;
+                        justify-content: space-between;
                     }
                 </style>
             </head>
             <body>
                 <h1>請 求 書</h1>
-                <h3>${invoice.date[0]} 年 ${invoice.date[1]} ⽉ ${invoice.date[2]} 日 締 め</h3>
-                <div>
-                    <p><strong>請求番号:</strong>   T1234567890123</p>
-                    <p><strong>請求先:</strong> ${invoice.client} 御中</p>
-                    <p><strong>請求日:</strong> ${invoice.date[0]}年${invoice.date[1] == 1 ? 12 : invoice.date[1] - 1}⽉${invoice.date[2]}日</p>
-                    <p><strong>ご請求金額:</strong> ¥${invoice.amount.toLocaleString()}</p>
+                <div class="wrapper">
+                    <div>
+                        <br><br><br>
+                        <p style="text-align: center;">${getClientName()} 御中</p>
+                        <br><br><br><br><br><br>
+                        <p style="border-bottom: 1px solid black;">　　　ご請求金額　　　¥${invoice.amount.toLocaleString()}</p>
+                        <table>
+                            <tr>
+                                <td>運送金額</td><td style="padding-left: 30px;">${invoice.items.reduce((sum, item) => sum + item.amount, 0).toLocaleString()}</td>
+                                <td>消費税</td><td style="padding-left: 30px;">${Math.floor(invoice.items.reduce((sum, item) => sum + item.amount, 0) * 0.1).toLocaleString()}</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div style="line-height: 1.5rem;">
+                        <p>${invoice.date[0]}　年　${invoice.date[1]}　⽉　${invoice.date[2]}　日　締　め</p>
+                        <br>
+                        <p>株　式　会　社　　A　運　送<br>愛 知 県 名 古 屋 市 〇 〇 〇 〇<br>T E L 0 5 6 2 ー 0 0 ー 0 0 0 0<br>F A X 0 5 6 2 ー 1 1 ー 1 1 1 1<br>登録番号 T1234567890123</p>
+                        <p><振込先><br>〇　〇　銀　行　〇　〇　支　店<br>（ 普通 ）　1　2　3　4　5　6　7　8</p>
+                    </div>
                 </div>
-                <h2>明細</h2>
                 <table>
                     <thead>
                         <tr>
-                            <th>日付</th>
-                            <th>着地</th>
-                            <th>金額</th>
+                            <td style="text-align: center;">日付</td>
+                            <td style="text-align: center;">着地</td>
+                            <td style="text-align: center;">金額</td>
                         </tr>
                     </thead>
                     <tbody>
                         ${invoice.items.map(item => `
                             <tr>
-                                <td>${item.date}</td>
-                                <td>${item.location}</td>
-                                <td>¥${item.amount.toLocaleString()}</td>
+                                <td style="width: 20%">${item.date}</td>
+                                <td style="width: 60%">${item.location}</td>
+                                <td style="width: 20%">¥${item.amount.toLocaleString()}</td>
                             </tr>
                         `).join('')}
                     </tbody>
                 </table>
-                <div>
-                    <p class="total">小計: ¥${invoice.items.reduce((sum, item) => sum + item.amount, 0).toLocaleString()}</p>
-                    <p class="total">消費税 (10%): ¥${Math.floor(invoice.amount * 0.1).toLocaleString()}</p>
-                    <p class="total">合計金額: ¥${invoice.amount.toLocaleString()}</p>
-                </div>
-                <div class="footer">
-                    <h3><振込先></h3>
-                    <p>○○銀行 ○○支店</p>
-                    <p>（普通）12345678</p>
-                    <p>愛知県名古屋市○○○○</p>
-                    <p>TEL: 0562-00-0000</p>
-                    <p>FAX: 0562-11-1111</p>
-                </div>
                 <script>
                     window.print();
                     setTimeout(() => window.close(), 100);
