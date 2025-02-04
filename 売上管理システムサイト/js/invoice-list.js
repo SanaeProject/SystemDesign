@@ -32,7 +32,7 @@ function printInvoice(invoiceId) {
                 <title>請求書 ${invoice.id}</title>
                 <style>
                     body {
-                        font-family: 'Arial', sans-serif;
+                        font-family: '游明朝';
                         margin: 20px;
                     }
                     h1, h2, h3 {
