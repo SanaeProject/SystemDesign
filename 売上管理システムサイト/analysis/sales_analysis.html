@@ -61,31 +61,28 @@
         <div class="radio card p-2 position-fixed top-0 end-0">
             <form id="chartSelect" name="chartSelect" class="search-box d-flex flex-column">
                 <label>
-                    <input	type="checkbox"
+                    <input	type="radio"
                             name="chart"
                             value="totalSalesTrend"
                             checked>
                     売上推移
                 </label>
                 <label>
-                    <input	type="checkbox"
+                    <input	type="radio"
                             name="chart"
-                            value="yearComparison"
-                            checked>
+                            value="yearComparison">
                     前年比
                 </label>
                 <label>
-                    <input	type="checkbox"
+                    <input	type="radio"
                             name="chart"
-                            value="monthlySales"
-                            checked>
+                            value="monthlySales">
                     月別売上
                 </label>
                 <label>
-                    <input	type="checkbox"
+                    <input	type="radio"
                             name="chart"
-                            value="monthComparison"
-                            checked>
+                            value="monthComparison">
                     先月比
                 </label>
             </form>
@@ -162,6 +159,10 @@
                 });
             }
         });
+
+        function insertChart() {
+
+        }
 
         window.addEventListener('DOMContentLoaded', function () {
             const parentElement = document.querySelector('.tableElem');
