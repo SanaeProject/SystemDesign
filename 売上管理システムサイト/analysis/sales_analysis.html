@@ -38,14 +38,21 @@
     <style>
         .canvas-container{
             width: 100%;
-            margin: 0 20px;
+            margin: auto;
         }
         .radio {
             margin: 60px 20px 0 0;
             z-index: 1000;
         }
+        .client-name {
+            display: flex;
+            justify-content: center;
+        }
+        .client-name p {
+            align-self: center;
+        }
         canvas {
-            margin: auto;
+            margin: 50px auto;
         }
     </style>
 
@@ -172,21 +179,21 @@
                 strElement = `
                     <div class="rowElem row border-3 border-top
                         ${index != invoices.length - 1 ? "" : "border-bottom" }" id="${invoice.id}">
-                        <div class="col-4 border-end border-3 w-25">
-                            <div class="my-2">${invoice.client}</div>
+                        <div class="client-name col-4 border-end border-3 w-25">
+                            <p class="my-2">${invoice.client}</p>
                         </div>
                         <div class="col-4 flex-fill row">
-                            <div class="canvas-container m-auto">
+                            <div class="canvas-container">
                                 <canvas id="totalSalesTrend-${invoice.id}" name="totalSalesTrend"></canvas>
                             </div>
-                            <div class="canvas-container m-auto">
-                                <canvas id="yearComparison-${invoice.id}" name="yearComparison"></canvas>
+                            <div class="canvas-container">
+                                <canvas id="yearComparison-${invoice.id}" name="yearComparison" class="d-none"></canvas>
                             </div>
-                            <div class="canvas-container m-auto">
-                                <canvas id="monthlySales-${invoice.id}" name="monthlySales"></canvas>
+                            <div class="canvas-container">
+                                <canvas id="monthlySales-${invoice.id}" name="monthlySales" class="d-none"></canvas>
                             </div>
-                            <div class="canvas-container m-auto">
-                                <canvas id="monthComparison-${invoice.id}" name="monthComparison"></canvas>
+                            <div class="canvas-container">
+                                <canvas id="monthComparison-${invoice.id}" name="monthComparison" class="d-none"></canvas>
                             </div>
                         </div>
                     </div>
