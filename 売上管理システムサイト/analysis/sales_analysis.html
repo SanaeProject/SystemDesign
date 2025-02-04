@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Bootstrap 5.3.0 -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
+      crossorigin="anonymous"
+    />
+
+    <!-- Googleフォント -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;500&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- 独自スタイルシート -->
+    <link href="../css/custom.css" rel="stylesheet" />
+
+    <!-- ＝＝＝　これ以降を編集します　＝＝＝＝＝＝ -->
+
+    <!-- 作成者情報 -->
+    <meta name="description" content="2024システムデザインⅠ演習" />
+    <meta
+      name="author"
+      content="クラス:CT1A 学籍番号:20246124 氏名:布目 純大"
+    />
+
+    <!-- Chart.jsのCDNを追加 -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        .canvas-container{
+            width: 100%;
+            margin: 0 20px;
+        }
+        .radio {
+            margin: 60px 20px 0 0;
+            z-index: 1000;
+        }
+        canvas {
+            margin: auto;
+        }
+    </style>
+
+    <title>Analysis</title>
+  </head>
+
+  <body>
+    <!-- ヘッダー挿入 -->
+    <header id="header"></header>
+
+    <!-- コンテンツ（ページ表示内容）はここ以降に作成します -->
+    <main class="container-fluid p-4">
+        <div class="radio card p-2 position-fixed top-0 end-0">
+            <form id="chartSelect" name="chartSelect" class="search-box d-flex flex-column">
+                <label>
+                    <input	type="radio"
+                            name="chart"
+                            value="totalSalesTrend"
+                            checked>
+                    売上推移
+                </label>
+                <label>
+                    <input	type="radio"
+                            name="chart"
+                            value="yearComparison">
+                    前年比
+                </label>
+                <label>
+                    <input	type="radio"
+                            name="chart"
+                            value="monthlySales">
+                    月別売上
+                </label>
+                <label>
+                    <input	type="radio"
+                            name="chart"
+                            value="monthComparison">
+                    先月比
+                </label>
+            </form>
+        </div>
+        <div class="title-container">
+            <h1>取引先別売上一覧</h1>
+        </div>
+        <div class="container">
+            <div class="search-box flex-grow-1 m-5 ms-0">
+                <label>取引先名</label>
+                <select name="client-name" id="client-select"class="w-100" style="height: 50px;">
+                    <option value="all">すべて</option>
+                </select>
+            </div>
+            <div class="tableElem container card py-3"></div>
+        </div>
+    </main>
+    <!-- コンテンツ（ページ表示内容）ここまで -->
+
+    <!-- BootstrapScript -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+      crossorigin="anonymous"
+    ></script>
+                             
+    <!-- 独自JavaScript -->
+    <script src="../js/custom.js"></script>
+    <script src="../js/invoice-data.js"></script>
+    <script>
+        const formElem = document.querySelector('form');
+        const selectBox = document.getElementById('client-select');
+        let totalSalesChart = [];
+        let monthComparisonChart = [];
+        let yearComparisonChart = [];
+        let monthlySalesChart = [];
+
+        formElem.addEventListener('change', function () {
+            const radioForm = document.chartSelect.chart;
+            const canvasElems = document.querySelectorAll('canvas');
+            console.log(radioForm);
+            Array.from(canvasElems).forEach((canvas) => {
+                canvas.classList.add('d-none');
+
+            });
+            Array.from(radioForm).forEach((radio) => {
+                if (radio.checked){
+                    Array.from(canvasElems).forEach((canvas) => {
+                        if (radio.value == canvas.getAttribute('name')) {
+                            canvas.classList.remove('d-none');
+                        }
+                    });
+                }
+            });
+        });
+
+        selectBox.addEventListener('change', function() {
+            const tableElems = document.querySelectorAll('.rowElem');
+
+            if (selectBox.value != 'all') {
+
+                Array.from(tableElems).forEach((elem, index) => {
+                    if (selectBox.value == index) {
+                        elem.classList.remove('d-none');
+                        elem.classList.add('d-flex');
+                    } else {
+                        elem.classList.add('d-none');
+                    }
+                });
+            } else {
+                Array.from(tableElems).forEach((elem, index) => {
+                    elem.classList.remove('d-none');
+                    elem.classList.add('d-flex');
+                });
+            }
+        });
+
+        function insertChart() {
+
+        }
+
+        window.addEventListener('DOMContentLoaded', function () {
+            const parentElement = document.querySelector('.tableElem');
+            let strElement = "";
+
+            invoices.forEach((invoice, index) => {
+                strElement = `
+                    <div class="rowElem row border-3 border-top
+                        ${index != invoices.length - 1 ? "" : "border-bottom" }" id="${invoice.id}">
+                        <div class="col-4 border-end border-3 w-25">
+                            <div class="my-2">${invoice.client}</div>
+                        </div>
+                        <div class="col-4 flex-fill row">
+                            <div class="canvas-container m-auto">
+                                <canvas id="totalSalesTrend-${invoice.id}" name="totalSalesTrend"></canvas>
+                            </div>
+                            <div class="canvas-container m-auto">
+                                <canvas id="yearComparison-${invoice.id}" name="yearComparison"></canvas>
+                            </div>
+                            <div class="canvas-container m-auto">
+                                <canvas id="monthlySales-${invoice.id}" name="monthlySales"></canvas>
+                            </div>
+                            <div class="canvas-container m-auto">
+                                <canvas id="monthComparison-${invoice.id}" name="monthComparison"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                parentElement.insertAdjacentHTML("beforeend", strElement);
+
+                // 合計売上の推移
+                const totalSalesCtx = document.getElementById(`totalSalesTrend-${invoice.id}`).getContext('2d');
+                totalSalesChart.push(new Chart(totalSalesCtx, {
+                    type: 'line',
+                    data: {
+                        labels: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+                        datasets: [{
+                            label: '合計売上',
+                            data: [12000, 15000, 18000, 20000, 22000, 25000, 27000, 30000, 32000, 35000, 37000, 40000],
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            borderWidth: 2,
+                            fill: false
+                        }]
+                    },
+                    options: {
+                        animation: false,
+                        responsive: false,
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        },
+                        maintainAspectRatio: false
+                    }
+                }));
+
+                // 月別の売上
+                const monthlySalesCtx = document.getElementById(`monthlySales-${invoice.id}`).getContext('2d');
+                monthlySalesChart.push(new Chart(monthlySalesCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+                        datasets: [{
+                            label: '月別売上',
+                            data: [12000, 15000, 18000, 20000, 22000, 25000, 27000, 30000, 32000, 35000, 37000, 40000],
+                            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                            borderColor: 'rgba(54, 162, 235, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        animation: false,
+                        responsive: false,
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        },
+                        maintainAspectRatio: false
+                    }
+                }));
+
+                // 前年との比較
+                const yearComparisonCtx = document.getElementById(`yearComparison-${invoice.id}`).getContext('2d');
+                yearComparisonChart.push(new Chart(yearComparisonCtx, {
+                    type: 'line',
+                    data: {
+                        labels: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+                        datasets: [
+                            {
+                                label: '今年の売上',
+                                data: [12000, 15000, 18000, 20000, 22000, 25000, 27000, 30000, 32000, 35000, 37000, 40000],
+                                borderColor: 'rgba(75, 192, 192, 1)',
+                                borderWidth: 2,
+                                fill: false
+                            },
+                            {
+                                label: '前年の売上',
+                                data: [10000, 14000, 16000, 19000, 21000, 24000, 26000, 29000, 31000, 34000, 36000, 39000],
+                                borderColor: 'rgba(255, 99, 132, 1)',
+                                borderWidth: 2,
+                                fill: false
+                            }
+                        ]
+                    },
+                    options: {
+                        animation: false,
+                        responsive: false,
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                            }
+                        },
+                        maintainAspectRatio: false
+                    }
+                }));
+
+                // 先月との比較
+                const monthComparisonCtx = document.getElementById(`monthComparison-${invoice.id}`).getContext('2d');
+                monthComparisonChart.push(new Chart(monthComparisonCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['先月', '今月'],
+                        datasets: [{
+                            label: '売上比較',
+                            data: [35000, 37000],
+                            backgroundColor: ['rgba(255, 206, 86, 0.2)', 'rgba(75, 192, 192, 0.2)'],
+                            borderColor: ['rgba(255, 206, 86, 1)', 'rgba(75, 192, 192, 1)'],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        animation: false,
+                        responsive: false,
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        },
+                        maintainAspectRatio: false
+                    }
+                }));
+
+                const option = document.createElement('option');
+                option.setAttribute('value', `${index}`)
+                option.innerText = invoice.client;
+                selectBox.appendChild(option);
+            });
+        });
+    </script>
+  </body>
+</html>

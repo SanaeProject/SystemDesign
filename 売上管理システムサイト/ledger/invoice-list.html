@@ -63,7 +63,7 @@
         }
     </style>
 
-    <title>請求書一覧</title>
+    <title>Invoice List</title>
   </head>
 
   <body>
@@ -73,42 +73,42 @@
     <!-- コンテンツ（ページ表示内容）はここ以降に作成します -->
     <main>
       <section>
-				<div class="d-flex justify-content-between align-items-center mb-4">
-					<h1 class="mb-4">請求書一覧</h1>
-					<a href="./invoice.html" class="btn btn-light bg-success-subtle">
-						新規作成
-					</a>
-				</div>
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1 class="mb-4">請求書一覧</h1>
+            <a href="./invoice.html" class="btn btn-light bg-success-subtle">
+                新規作成
+            </a>
+        </div>
 
         <div class="content-container">
 
             <!-- 検索ボックス -->
-							<div class="search-box">
-									<div class="row g-3">
-											<div class="col-md-3">
-													<label class="form-label">請求期間</label>
-													<select class="form-select" id="period">
+            <div class="search-box">
+                <div class="row g-3">
+                    <div class="col-md-3">
+                        <label class="form-label">請求期間</label>
+                        <select class="form-select" id="period">
                             <option>2025年1月</option>
                             <option>2025年2月</option>
                             <option>2025年3月</option>
                         </select>
                     </div>
-                    <div class="col-md-3">
-											<label class="form-label" for="client">取引先</label>
-											<select class="form-select" id="client">
-												<option value="">取引先を選択
-												</option>
-											</select>
-                    </div>
-                    <div class="col-md-3">
-                        <label for="status" class="form-label">状態</label>
-                        <select id="status" class="form-select">
-                            <option value="all">すべて</option>
-                            <option value="未請求">未請求</option>
-                            <option value="請求済み">請求済み</option>
-                            <option value="入金済み">入金済み</option>
-                        </select>
-                    </div>
+                <div class="col-md-3">
+                    <label class="form-label" for="client">取引先</label>
+                    <select class="form-select" id="client">
+                        <option value="">取引先を選択
+                        </option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label for="status" class="form-label">状態</label>
+                    <select id="status" class="form-select">
+                        <option value="all">すべて</option>
+                        <option value="未請求">未請求</option>
+                        <option value="請求済み">請求済み</option>
+                        <option value="入金済み">入金済み</option>
+                    </select>
+                </div>
                     <div class="col-md-3 d-flex align-items-end">
                         <button class="btn btn-primary w-100" onclick="filterInvoices()">
                             <i class="fas fa-search me-2"></i>検索
@@ -146,68 +146,65 @@
                             </button>
                         </div>
                         <div class="invoice-header">
-					<h2 class="text-center">請求書</h2>
-					<div class="text-end" id="resistrationNumber">
-						請求番号:
-					</div>
-					<div class="text-end" id="closingDate">
-						年月末締め
-					</div>
-				</div>
+                            <h2 class="text-center">請求書</h2>
+                            <div class="text-end" id="resistrationNumber">
+                                請求番号:
+                            </div>
+                            <div class="text-end" id="closingDate"></div>
+                        </div>
 
 				
-			<div class="row md-4">
-				<div class="col-6">
-					<h3>請求先:</h3>
-					<div id="clientName"></div>
-				</div>
-				<div class="col-6 text-end">
-					<h3>請求元:</h3>
-					<div>株式会社A運送</div>
-					<div>TEL: 0562-00-0000</div>
-					<div>FAX: 0562-11-1111</div>
-				</div>
-			</div>
+                        <div class="row md-4">
+                            <div class="col-6">
+                                <h3>請求先:</h3>
+                                <div id="clientName"></div>
+                            </div>
+                            <div class="col-6 text-end">
+                                <h3>請求元:</h3>
+                                <div>株式会社A運送</div>
+                                <div>TEL: 0562-00-0000</div>
+                                <div>FAX: 0562-11-1111</div>
+                            </div>
+                        </div>
 
-				<div class="table-responsive">
-					<table class="table invoice-table">
-						<thead>
-							<tr>
-								<th>日付</th>
-								<th>着地</th>
-								<th>金額</th>
-							</tr>
-						</thead>
-						<tbody id="invoiceItems">
-						</tbody>
-						<tfoot>
-							<tr>
-								<td colspan="2" class="text-end">小計</td>
-								<td id="subtotal">0</td>
-							</tr>
-							<tr>
-								<td colspan="2" class="text-end">消費税 (10%)</td>
-								<td id="tax">0</td>
-							</tr>
-							<tr>
-								<td colspan="2" class="text-end">合計</td>
-								<td id="total">0</td>
-							</tr>
-						</tfoot>
-					</table>
-				</div>
+                        <div class="table-responsive">
+                            <table class="table invoice-table">
+                                <thead>
+                                    <tr>
+                                        <th>日付</th>
+                                        <th>着地</th>
+                                        <th>金額</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="invoiceItems">
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="2" class="text-end">小計</td>
+                                        <td id="subtotal">0</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" class="text-end">消費税 (10%)</td>
+                                        <td id="tax">0</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" class="text-end">合計</td>
+                                        <td id="total">0</td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
 
-				<div class="bank-info mt-4">
-					<h3>振込先</h3>
-					<div>○○銀行 ○○支店</div>
-					<div>（普通）12345678</div>
-					<div>愛知県名古屋市○○○○</div>
-				</div>
-			</div>
+                        <div class="bank-info mt-4">
+                            <h3>振込先</h3>
+                            <div>○○銀行 ○○支店</div>
+                            <div>（普通）12345678</div>
+                            <div>愛知県名古屋市○○○○</div>
+                        </div>
                     </div>
                 </div>
             </div>
-
+            
             <!-- ページネーション -->
             <nav aria-label="Page navigation">
                 <ul class="pagination justify-content-center">
